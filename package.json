@@ -2,7 +2,7 @@
   "name": "varonodejs",
   "version": "1.0.0",
   "description": "Web Page para Remedios Varo",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
@@ -20,6 +20,7 @@
     "body-parser": "^1.20.3",
     "express": "^4.21.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.4"
   }
