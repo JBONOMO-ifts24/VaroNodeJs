@@ -47,7 +47,7 @@ router.get('/', controller.allCuadros);
 router.get('/:idcuadro', controller.showCuadro);
 
 //// METODO POST  ////
-router.post('/', controller.storeCuadro);
+router.post('/', upload.single('imagen'), controller.storeCuadro);
 
 //// METODO PUT  ////
 router.put('/:idcuadro', controller.updateCuadro);
