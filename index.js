@@ -12,6 +12,7 @@ app.use('/mensajes', mensajesRouter);
 app.use('/cuadros', cuadrosRouter);
 // Siempre que me refiera a mensajes o cuadros le coloco el prefijo.
 
+app.use("/auth", require("./routers/loginRouter"));
 
 app.get("/", (req, res) => {
     res.send("Hola VaroFans!!, pueden consultar sus mensajes en /mensajes, si quieren ver cuadros de Remedios o sus colegas vayan a /cuadros");
