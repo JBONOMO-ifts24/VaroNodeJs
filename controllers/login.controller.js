@@ -1,11 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-const userModel = require("../models/user.models");
-const users = require("../models/user.models");
 const db = require("../db/db");
+const dotenv = require('dotenv');
+dotenv.config();
 
-const SECRET_KEY = 'tu_secreta_llave';
 
 
 //Ruta de registro.
@@ -43,7 +41,7 @@ const login = (req, res) => {
       
           if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
       
-          const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '1h' });
+          const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' });
           res.status(200).send({ token });
         });
 };

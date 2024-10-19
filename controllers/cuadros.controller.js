@@ -69,10 +69,13 @@ const storeCuadro = (req, res) => {
 
 //// METODO PUT  ////
 const updateCuadro = (req, res) => {
-    const {idcuadros} = req.params;
+    console.log(req.params);
+    const {idcuadro} = req.params;
+    console.log(idcuadro);
     const {nombre_cuadro, pintor, ano_realizado} = req.body;
+    console.log(idcuadro);
     const sql ="UPDATE cuadros SET nombre_cuadro = ?, pintor = ?, ano_realizado = ? WHERE idcuadros = ?";
-    db.query(sql,[nombre_cuadro, pintor, ano_realizado, idcuadros], (error, result) => {
+    db.query(sql,[nombre_cuadro, pintor, ano_realizado, idcuadro], (error, result) => {
         console.log(result);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
