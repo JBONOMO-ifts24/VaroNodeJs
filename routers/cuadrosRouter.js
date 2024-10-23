@@ -5,6 +5,9 @@ const router = express.Router();
 
 const controller = require("../controllers/cuadros.controller");
 
+//// AUTH ////
+const authMiddleware = require("../middleware/auth.middleware");
+
 
 //// MULTER ////
 const multer = require("multer");
@@ -47,13 +50,13 @@ router.get('/', controller.allCuadros);
 router.get('/:idcuadro', controller.showCuadro);
 
 //// METODO POST  ////
-router.post('/', upload.single('imagen'), controller.storeCuadro);
+router.post('/',authMiddleware.authenticateToken ,upload.single('imagen'), controller.storeCuadro);
 
 //// METODO PUT  ////
-router.put('/:idcuadro', controller.updateCuadro);
+router.put('/:idcuadro', authMiddleware.authenticateToken ,controller.updateCuadro);
 
 //// METODO DELETE ////
-router.delete('/:idcuadro', controller.destroyCuadro);
+router.delete('/:idcuadro', authMiddleware.authenticateTokenAdmin ,controller.destroyCuadro);
 
 // EXPORTAR ROUTERS
 module.exports = router;
