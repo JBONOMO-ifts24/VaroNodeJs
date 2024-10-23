@@ -7,7 +7,7 @@
 // ano_realizado
 // nombre_archivo
 
-const { NOW, Sequelize } = require("sequelize");
+
 const db = require("../db/db");
 
 //// METODO GET  /////
