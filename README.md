@@ -4,8 +4,9 @@ Base de datos en MySQL
 Uso de Mulster para subir archivos
 Para login: Json Web Token-
 
-Enunciado del proyecto:
-Criterios de evaluación ##PROYECTO INTEGRADOR 2024
+#Enunciado del proyecto:
+
+##Criterios de evaluación ##PROYECTO INTEGRADOR 2024
 Cada alumno deberá realizar una presentación del Proyecto Integrador 2024 - 2025, detallando cada una de
 las secciones y módulos que el mismo contendrá, siendo requisito inicial de la totalidad del Proyecto
 para aprobar las cursadas de Ingeniería de Software y Back End los siguientes puntos:
