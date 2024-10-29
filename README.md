@@ -4,9 +4,51 @@ Base de datos en MySQL
 Uso de Mulster para subir archivos
 Para login: Json Web Token-
 
-#Enunciado del proyecto:
+# Endpoints
+## Autenticación
+- POST /auth/register = Registrar usuario.
+- POST /auth/login = Login de usuario.
+- GET /auth/protected = Prueba de uso (Se tiene que estar logueado)
+- GET /auth/login = Obtener todos los usuarios (Se tiene que estar logueado)
+- PUT /auth/login/id = Modificación de usuario (Se tiene que estar logueado con un usuario con permisos de administrador)
+- DELETE /auth/login/id = Borrar usuario (Se tiene que estar logueado con un usuario con permisos de administrador)
 
-##Criterios de evaluación ##PROYECTO INTEGRADOR 2024
+## Mensajes
+- GET /mensajes = Obtener todos los mensajes.
+- GET /mensajes/id = Obtener un mensaje en específico.
+- POST /mensajes = Crear un nuevo mensaje.
+- PUT /mensajes = Modificar un mensaje.
+- DELETE /mensajes = Borrar un mensaje
+
+## Cuadros
+- GET /cuadros = Obtener todos los cuadros.
+- GET /cuadros/id = Obtener un cuadro en específico
+- POST /cuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro).
+- PUT /cuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro).
+- DELETE /cuadros = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador para borrar un cuadro).
+
+## Países
+- GET /paises = Obtener todos los países. (Se tiene que estar logueado)
+- GET /paises/:idpais = Obtener un país por ID. (Se tiene que estar logueado)
+- PUT /paises/:idpais = Actualizar un país (sólo para administradores).
+- DELETE /paises/:idpais = Eliminar un país (sólo para administradores).
+
+## Ciudades
+- GET /ciudades = Obtener todas las ciudades. (Se tiene que estar logueado)
+- GET /ciudades/id = Obtener una ciudad. (Se tiene que estar logueado)
+- POST /ciudades - Crear una nueva ciudad.(sólo para administradores)
+- PUT /paises/id = Actualizar una ciudad (sólo para administradores).
+
+## Pintores
+- GET /pintores = Obtener todos los pintores.
+- GET /pintores/id = Obtener un pintor.
+- POST /pintores - Crear un nuevo pintor (sólo para administradores)
+- PUT /pintores = Actualizar una ciudad (sólo para administradores).
+
+
+# Enunciado del proyecto:
+
+## Criterios de evaluación -PROYECTO INTEGRADOR 2024-
 Cada alumno deberá realizar una presentación del Proyecto Integrador 2024 - 2025, detallando cada una de
 las secciones y módulos que el mismo contendrá, siendo requisito inicial de la totalidad del Proyecto
 para aprobar las cursadas de Ingeniería de Software y Back End los siguientes puntos:
