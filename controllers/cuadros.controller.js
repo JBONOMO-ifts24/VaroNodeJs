@@ -11,7 +11,7 @@ const db = require("../db/db");
 
 //// METODO GET  /////
 
-// Para todos las peliculas
+// Para todos los cuadros
 const allCuadros = (req, res) => {
   const sql =
     "SELECT cuadros_v2.idcuadros_v2, cuadros_v2.nombre_cuadro , pintores.nombre_pintor as pintor ,cuadros_v2.ano_realizado, cuadros_v2.nombre_archivo, cuadros_v2.ubicacion_orig  FROM cuadros_v2 INNER JOIN pintores ON cuadros_v2.pintor = pintores.idpintores";
