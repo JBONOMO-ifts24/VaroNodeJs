@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>{{ title }}</title>
-</head>
-<body>
-  <h1>{{ title }}</h1>
+{% extends "base.html" %}
+
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
   <h2>Hola Varo Fans!!!</h2>
   <h2>Bienvenidos a la página de Remedios Varo 🎨 </h2>
 
   <h1>Api Cuadros</h1>
-      <p>Bienvenidos a la API de cuadros de la página de Remedios Varo.</p>
       <p>
         Aquí encontrarás cuadros de Remedios Varo, y artistas relacionados con
         información sobre los mismos.
@@ -37,6 +35,5 @@
           cuadro
         </li>
       </ul>
+{% endblock %}
 
-</body>
-</html>

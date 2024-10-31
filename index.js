@@ -1,5 +1,6 @@
 const express = require("express");
 const nunjucks = require('nunjucks');
+const path = require('path');
 const app = express();
 
 
@@ -9,6 +10,9 @@ app.use(express.json());
 
 // Configura Nunjucks 
 nunjucks.configure('views', { autoescape: true, express: app });
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 
 const mensajesRouter = require('./routers/mensajesRouter');
 const cuadrosRouter = require('./routers/cuadrosRouter');
