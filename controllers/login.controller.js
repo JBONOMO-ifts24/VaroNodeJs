@@ -11,12 +11,16 @@ dotenv.config();
 const register = (req, res) => {
     const { username, email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
+    let archivo_foto = "";
+    if (req.file) {
+        archivo_foto = req.file.filename;
+      }
     console.log(username);
     console.log(email);
     console.log(hashedPassword);
   
-    const query = 'INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)';
-    db.query(query, [username, email, hashedPassword], (err, results) => {
+    const query = 'INSERT INTO usuarios (username, email, password, archivo_foto) VALUES (?, ?, ?, ?)';
+    db.query(query, [username, email, hashedPassword,archivo_foto], (err, results) => {
         console.log(results);
         console.log(err);
         if (err) return res.status(500).send('Error en el servidor');
@@ -50,7 +54,7 @@ const login = (req, res) => {
 
 // Para mostrar todos los usuarios
 const allUsuarios = (req, res) => {
-    const sql = "SELECT username, email FROM usuarios;";
+    const sql = "SELECT username, email, archivo_foto FROM usuarios;";
     db.query(sql, (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
@@ -63,7 +67,7 @@ const allUsuarios = (req, res) => {
 const showUsuario = (req, res) => {
     const {idusuario} = req.params;
     console.log(idusuario);
-    const sql = "SELECT username, email FROM usuarios WHERE idusuarios = ?";
+    const sql = "SELECT username, email, archivo_foto FROM usuarios WHERE idusuarios = ?";
     db.query(sql,[idusuario], (error, rows) => {
         console.log(rows);
         if(error){
