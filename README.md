@@ -17,8 +17,8 @@ Para login: Json Web Token-
 ## Mensajes
 - GET /mensajes = Obtener todos los mensajes.
 - GET /mensajes/id = Obtener un mensaje en específico.
-- POST /mensajes = Crear un nuevo mensaje.
-- PUT /mensajes = Modificar un mensaje.
+- POST /mensajes = Crear un nuevo mensaje. (datos requeridos: nombre_usuario, mensaje)
+- PUT /mensajes = Modificar un mensaje. (datos requeridos: nombre_usuario, mensaje)
 - DELETE /mensajes = Borrar un mensaje
 
 ## Cuadros
