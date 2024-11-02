@@ -6,11 +6,12 @@ Para login: Json Web Token-
 
 # Endpoints
 ## Autenticación
-- POST /auth/register = Registrar usuario.
-- POST /auth/login = Login de usuario.
+- POST /auth/register = Registrar usuario. (datos requeridos: username, email, password)
+- POST /auth/login = Login de usuario. (datos requeridos: username, password)
 - GET /auth/protected = Prueba de uso (Se tiene que estar logueado)
-- GET /auth/login = Obtener todos los usuarios (Se tiene que estar logueado)
-- PUT /auth/login/id = Modificación de usuario (Se tiene que estar logueado con un usuario con permisos de administrador)
+- GET /auth/usuarios = Obtener todos los usuarios (Se tiene que estar logueado)
+- GET /auth/usuarios/id = Obtener usuario por id (Se tiene que estar logueado)
+- PUT /auth/usuarios/id = Modificación de usuario (Se tiene que estar logueado con un usuario con permisos de administrador)(datos requeridos: email, password)
 - DELETE /auth/login/id = Borrar usuario (Se tiene que estar logueado con un usuario con permisos de administrador)
 
 ## Mensajes
