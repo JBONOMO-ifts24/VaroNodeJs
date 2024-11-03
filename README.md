@@ -19,14 +19,14 @@ Para login: Json Web Token-
 - GET /mensajes/id = Obtener un mensaje en específico.
 - POST /mensajes = Crear un nuevo mensaje. (datos requeridos: nombre_usuario, mensaje)
 - PUT /mensajes = Modificar un mensaje. (datos requeridos: nombre_usuario, mensaje)
-- DELETE /mensajes = Borrar un mensaje
+- DELETE /mensajes/id = Borrar un mensaje
 
 ## Cuadros
 - GET /cuadros = Obtener todos los cuadros.
 - GET /cuadros/id = Obtener un cuadro en específico
-- POST /cuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro).
-- PUT /cuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro).
-- DELETE /cuadros = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador para borrar un cuadro).
+- POST /cuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro , pintor , ano_realizado, *archivo de imagen*, ubicacion_orig)
+- PUT /cuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro, pintor, ano_realizado,ubicacion_orig)
+- DELETE /cuadros/id = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador para borrar un cuadro).
 
 ## Países
 - GET /paises = Obtener todos los países. (Se tiene que estar logueado)
@@ -43,8 +43,9 @@ Para login: Json Web Token-
 ## Pintores
 - GET /pintores = Obtener todos los pintores.
 - GET /pintores/id = Obtener un pintor.
-- POST /pintores - Crear un nuevo pintor (sólo para administradores)
-- PUT /pintores = Actualizar una ciudad (sólo para administradores).
+- POST /pintores - Crear un nuevo pintor (sólo para administradores) (datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad).
+- PUT /pintores = Actualizar una ciudad (sólo para administradores).(datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad)
+- DELETE /pintores/id  Eliminar un pintor (sólo para administradores).
 
 
 # Enunciado del proyecto:
