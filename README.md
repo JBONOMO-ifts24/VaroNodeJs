@@ -31,14 +31,15 @@ Para login: Json Web Token-
 ## Países
 - GET /paises = Obtener todos los países. (Se tiene que estar logueado)
 - GET /paises/:idpais = Obtener un país por ID. (Se tiene que estar logueado)
-- PUT /paises/:idpais = Actualizar un país (sólo para administradores).
+- PUT /paises/:idpais = Actualizar un país (sólo para administradores). (datos requeridos: "nombre")
+- POST /paises/:idpais = Crear un nuevo país (sólo para administradores). (datos requeridos: "nombre")
 - DELETE /paises/:idpais = Eliminar un país (sólo para administradores).
 
 ## Ciudades
 - GET /ciudades = Obtener todas las ciudades. (Se tiene que estar logueado)
 - GET /ciudades/id = Obtener una ciudad. (Se tiene que estar logueado)
-- POST /ciudades - Crear una nueva ciudad.(sólo para administradores)
-- PUT /paises/id = Actualizar una ciudad (sólo para administradores).
+- POST /ciudades - Crear una nueva ciudad.(sólo para administradores) (datos requeridos: "ciudad", "pais").
+- PUT /paises/id = Actualizar una ciudad (sólo para administradores) (datos requeridos: "nombre", "pais").
 
 ## Pintores
 - GET /pintores = Obtener todos los pintores.
