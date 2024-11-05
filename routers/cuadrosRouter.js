@@ -26,20 +26,22 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
+    limits: { fileSize: 1024 * 1024 * 1 }, // 1 MB
     fileFilter: (req, file, cb) => {
+        console.log('upload');
         console.log(file);
+        console.log(file.size);
         const fileTypes = /jpg|jpeg|png/;
         const mimetype = fileTypes.test(file.mimetype);
         const extname = fileTypes.test(
             path.extname(file.originalname).toLowerCase()
         );
-        if(mimetype && path.extname) {
+        if(mimetype && extname) {
             return cb(null, true);
-        };
-        cb("Tipo de archivo no soportado");
+        }
+        cb("Tipo de archivo no soportado o de tamaño mayor a 1 MB");
     },
-    limits: {fileSize: 1024 * 1024 * 1}, // aprox 1Mb
-});
+})
 
 //// METODO GET  /////
 

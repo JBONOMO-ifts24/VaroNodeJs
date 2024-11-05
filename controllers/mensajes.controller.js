@@ -22,7 +22,7 @@ const allMensajes = (req, res) => {
     }); 
 };
 
-// Para una pelicula
+// Para un mensaje
 const showMensaje = (req, res) => {
     const {idmensaje} = req.params;
     console.log(idmensaje);
@@ -91,7 +91,7 @@ const destroyMensaje = (req, res) => {
         if(result.affectedRows == 0){
             return res.status(404).send({error : "ERROR: El mensaje a borrar no existe"});
         };
-        res.json({mesaje : "Mensaje Eliminado"});
+        res.json({mensaje : "Mensaje Eliminado"});
     }); 
 };
 

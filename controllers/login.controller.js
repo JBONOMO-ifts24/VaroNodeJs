@@ -54,7 +54,7 @@ const login = (req, res) => {
 
 // Para mostrar todos los usuarios
 const allUsuarios = (req, res) => {
-    const sql = "SELECT username, email, archivo_foto FROM usuarios;";
+    const sql = "SELECT idusuarios as id , username, email, archivo_foto FROM usuarios;";
     db.query(sql, (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
