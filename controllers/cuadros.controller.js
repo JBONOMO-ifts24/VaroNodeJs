@@ -11,7 +11,7 @@ const db = require("../db/db");
 
 //// METODO GET  /////
 
-// Para todos las peliculas
+// Para todos los cuadros
 const allCuadros = (req, res) => {
   const sql =
     "SELECT cuadros_v2.idcuadros_v2, cuadros_v2.nombre_cuadro , pintores.nombre_pintor as pintor ,cuadros_v2.ano_realizado, cuadros_v2.nombre_archivo, cuadros_v2.ubicacion_orig  FROM cuadros_v2 INNER JOIN pintores ON cuadros_v2.pintor = pintores.idpintores";
@@ -51,12 +51,21 @@ const showCuadro = (req, res) => {
 
 //// METODO POST  ////
 const storeCuadro = (req, res) => {
+  console.log('storecuadro');
   console.log(req.file);
   console.log(req.body);
   let nombre_archivo = "";
 
   if (req.file) {
     nombre_archivo = req.file.filename;
+  }
+  else {
+    // Handle file upload errors
+    if (req.fileValidationError) {
+      res.status(400).send('File size exceeds the limit.');
+    } else {
+      res.status(500).send('Error uploading file.');
+    }
   }
 
   const { nombre_cuadro, pintor, ano_realizado, ubicacion_orig } = req.body;
