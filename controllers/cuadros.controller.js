@@ -51,12 +51,21 @@ const showCuadro = (req, res) => {
 
 //// METODO POST  ////
 const storeCuadro = (req, res) => {
+  console.log('storecuadro');
   console.log(req.file);
   console.log(req.body);
   let nombre_archivo = "";
 
   if (req.file) {
     nombre_archivo = req.file.filename;
+  }
+  else {
+    // Handle file upload errors
+    if (req.fileValidationError) {
+      res.status(400).send('File size exceeds the limit.');
+    } else {
+      res.status(500).send('Error uploading file.');
+    }
   }
 
   const { nombre_cuadro, pintor, ano_realizado, ubicacion_orig } = req.body;
