@@ -42,6 +42,9 @@ const upload = multer({
 //// METODO POST  PARA LOGIN Y REGISTER ////
 router.post('/register',upload.single('imagen'), controller.register);
 router.post('/login', controller.login);
+router.get('/login', (req, res) => {
+    res.render('login.html');
+});
 
 router.get("/protected", authMiddleware.authenticateToken, (req, res) => {
     res.status(200).send(`Bienvenido usuario registrado!`);
@@ -55,7 +58,10 @@ router.put('/usuarios/:idusuario', authMiddleware.authenticateTokenAdmin, contro
 router.delete('/usuarios/:idusuario', authMiddleware.authenticateTokenAdmin, controller.destroyUsuario);
 //Delete sólo van a poder usarlo los usuarios ADMIN
 
+//MÉTODO de LOGOUT
+router.get('/logout', (req, res) => { res.clearCookie('token'); res.render('index.html'); });
 
+router.get('/check-auth',authMiddleware.authenticateTokenPagina, (req, res) => {res.status(200).send(`Estas registradou!!`)});
 
 // EXPORTAR ROUTERS
 module.exports = router;

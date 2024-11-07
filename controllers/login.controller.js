@@ -44,10 +44,12 @@ const login = (req, res) => {
           console.log(user);
           const isPasswordValid = bcrypt.compareSync(password, user.password);
       
-          if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+          //if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+          if (!isPasswordValid) return res.redirect('login');
       
-          const token = jwt.sign({ id: user.idusuarios }, process.env.SECRET_KEY, { expiresIn: '1h' });
-          res.status(200).send({ token });
+          const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
+          //res.status(200).send({ token });
+          res.cookie('token', token, { httpOnly: true }); res.render('index.html', {user: username, loggedIn: true});
         });
 };
 

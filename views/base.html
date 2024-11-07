@@ -68,12 +68,21 @@
             <a class="nav-link" href="/links">Información Adicional</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/apiCuadros">API cuadros</a>
+            <a class="nav-link" href="/apiCuadros">API</a>
           </li>
         </ul>
       </div>
       <div id="logueo" style="float: right">
-        <a class="btn btn-secondary" href="#">Log in</a>
+        {% if loggedIn %} 
+          <p><strong>{{ user }}</strong></p> 
+          <p>Estás logueado.</p> 
+          <a href="/auth/logout">Logout</a>
+           {% else %} 
+          <a class="btn btn-secondary" href="/auth/login">Log in</a>
+          <br>
+          <a href="/register">Registrate</a>
+           
+          {% endif %}
       </div>
     </nav>
     <main> {% block content %}{% endblock %} </main>

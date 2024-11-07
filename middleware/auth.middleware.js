@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const db = require("../db/db");
 
+
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -15,6 +16,22 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+const authenticateTokenPagina = (req, res, next) => {
+  const authHeader = req.headers["cookie"];
+  console.log(req.headers['cookie']);
+  const token = req.cookies.token ;
+  console.log(token);
+  if (!token) return res.redirect('/auth/login');
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403);
+    console.log(user);
+    req.user = user;
+    next();
+  });
+};
+
 
 const authenticateTokenAdmin = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -64,4 +81,4 @@ const authenticateTokenAdmin = (req, res, next) => {
   }
 };
 
-module.exports = { authenticateToken, authenticateTokenAdmin };
+module.exports = { authenticateToken, authenticateTokenAdmin,authenticateTokenPagina,};
