@@ -81,4 +81,56 @@ const authenticateTokenAdmin = (req, res, next) => {
   }
 };
 
-module.exports = { authenticateToken, authenticateTokenAdmin,authenticateTokenPagina,};
+const authenticateTokenAdminPag = (req, res, next) => {
+  const authHeader = req.headers["cookie"];
+  console.log(req.headers['cookie']);
+  const token = req.cookies.token ;
+  console.log(token);
+  if (!token) return res.redirect('/auth/login');
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(decoded); // Imprime el contenido decodificado del token
+    const sql =
+      "SELECT * FROM roles_usuarios WHERE id_usuarios = ? AND id_roles = 1;";
+    const usuario = decoded.id;
+    const username = decoded.username;
+    db.query(sql, [usuario], (error, result) => {
+      console.log(result);
+      if (error) {
+        return res
+          .status(500)
+          .json({ error: "ERROR: Intente más tarde por favor" });
+      }
+      if (result.affectedRows == 0) {
+        return res
+          .status(404)
+          .send({
+            error: "ERROR: El Usuario no se encontró o no tiene permisos ADMIN",
+          });
+      }
+      console.log("Admin Autorizado!!!");
+      req.user = username;
+      next();
+    });
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      console.error('El token ha expirado');
+      return res
+          .status(404)
+          .send({
+            error: "Token está vencido!!!",
+          });
+
+    } else {
+      console.error('Error al verificar el token:', err);
+      return res
+          .status(404)
+          .send({
+            error: "ERROR: El Usuario no se encontró o no tiene permisos ADMIN",
+          });
+    }
+  }
+};
+
+module.exports = { authenticateToken, authenticateTokenAdmin,authenticateTokenPagina,authenticateTokenAdminPag,};

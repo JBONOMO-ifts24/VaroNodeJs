@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1>APIs</h1>
+  <p>
+    Podés acceder a las APIs de este webapp, donde tenemos un montón de información relacionada al arte de Remedios
+    Varo.
+  </p>
+  <h2>Endpoints</h2>
+  <h3>Autenticación</h3>
+  <ul>
+    <li> POST /auth/register = Registrar usuario. (datos requeridos: username, email, password)</li>
+    <li> POST /auth/login = Login de usuario. (datos requeridos: username, password)</li>
+    <li> GET /auth/protected = Prueba de uso (Se tiene que estar logueado)</li>
+    <li> GET /auth/usuarios = Obtener todos los usuarios (Se tiene que estar logueado)</li>
+    <li> GET /auth/usuarios/id = Obtener usuario por id (Se tiene que estar logueado)</li>
+    <li> PUT /auth/usuarios/id = Modificación de usuario (Se tiene que estar logueado con un usuario con permisos de
+      administrador)(datos requeridos: email, password)</li>
+    <li> DELETE /auth/login/id = Borrar usuario (Se tiene que estar logueado con un usuario con permisos de
+      administrador)</li>
+  </ul>
+  <h3>Mensajes</h3>
+  <ul>
+    <li>GET /mensajes/id = Obtener un mensaje en específico.</li>
+    <li>POST /mensajes = Crear un nuevo mensaje. (datos requeridos: nombre_usuario, mensaje)</li>
+    <li>PUT /mensajes = Modificar un mensaje. (datos requeridos: nombre_usuario, mensaje)</li>
+    <li>DELETE /mensajes/id = Borrar un mensaje</li>
+  </ul>
+
+  <h3>Cuadros</h3>
+  <ul>
+    <li>GET /cuadros = Obtener todos los cuadros.</li>
+    <li>GET /cuadros/id = Obtener un cuadro en específico</li>
+    <li>POST /cuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos:
+      nombre_cuadro , pintor , ano_realizado, *archivo de imagen*, ubicacion_orig)</li>
+    <li>PUT /cuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos:
+      nombre_cuadro, pintor, ano_realizado,ubicacion_orig)</li>
+    <li>DELETE /cuadros/id = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador
+      para borrar un cuadro).</li>
+  </ul>
+  <h3>Paises</h3>
+  <ul>
+    <li>GET /paises = Obtener todos los países. (Se tiene que estar logueado)</li>
+    <li>GET /paises/:idpais = Obtener un país por ID. (Se tiene que estar logueado)</li>
+    <li>PUT /paises/:idpais = Actualizar un país (sólo para administradores). (datos requeridos: "nombre")</li>
+    <li>POST /paises/:idpais = Crear un nuevo país (sólo para administradores). (datos requeridos: "nombre")</li>
+    <li>DELETE /paises/:idpais = Eliminar un país (sólo para administradores).</li>
+  </ul>
+
+  <h3>Ciudades</h3>
+  <ul>
+    <li>GET /ciudades = Obtener todas las ciudades. (Se tiene que estar logueado)</li>
+    <li>GET /ciudades/id = Obtener una ciudad. (Se tiene que estar logueado)</li>
+    <li>POST /ciudades - Crear una nueva ciudad.(sólo para administradores) (datos requeridos: "ciudad", "pais").</li>
+    <li>PUT /paises/id = Actualizar una ciudad (sólo para administradores) (datos requeridos: "nombre", "pais").</li>
+  </ul>
+  <h3>Pintores</h3>
+  <ul>
+  <li>GET /pintores = Obtener todos los pintores.
+  <li>GET /pintores/id = Obtener un pintor.
+  <li>POST /pintores - Crear un nuevo pintor (sólo para administradores) (datos requeridos: nombre_pintor,
+  fecha_nac,fecha_mue,biograf_pintor, ciudad).</li>
+  <li>PUT /pintores = Actualizar una ciudad (sólo para administradores).(datos requeridos: nombre_pintor,
+  fecha_nac,fecha_mue,biograf_pintor, ciudad)</li>
+  <li>DELETE /pintores/id Eliminar un pintor (sólo para administradores).</li>
+  </ul>
+
+</div>
+{% endblock %}

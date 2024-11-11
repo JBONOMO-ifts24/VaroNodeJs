@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %} Varo Node.js {% endblock %}</title>
+    <title>{% block title %} ADMIN {% endblock %}</title>
     <!-- CDN de Bootstrap-->
     <link
       rel="stylesheet"
@@ -55,34 +55,33 @@
 
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Paises</a>
+            </li>
           <li class="nav-item">
-            <a class="nav-link" href="/historia">Historia</a>
+            <a class="nav-link" href="/">Ciudades</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/obra">Obra</a>
+            <a class="nav-link" href="/">Pintores</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/muro">Mensajes</a>
+            <a class="nav-link" href="/">Cuadros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/links">Información Adicional</a>
+            <a class="nav-link" href="/">Usuarios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/api">API</a>
+            <a class="nav-link" href="/">Mensajes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/api"></a>
           </li>
         </ul>
       </div>
       <div id="logueo" style="float: right">
-        {% if loggedIn %} 
-          <p>Estás logueado como:</p> 
+          <p>usuario admin:</p> 
           <p><strong>{{ user }}</strong></p> 
           <a href="/auth/logout">Logout</a>
-           {% else %} 
-          <a class="btn btn-secondary" href="/auth/login">Log in</a>
-          <br>
-          <a href="/register">Registrate</a>
-           
-          {% endif %}
       </div>
     </nav>
     <main> {% block content %}{% endblock %} </main>

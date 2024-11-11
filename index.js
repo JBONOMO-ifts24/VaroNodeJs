@@ -26,12 +26,14 @@ const paisesRouter = require('./routers/paisesRouter');
 const ciudadesRouter = require('./routers/ciudadesRouter');
 const pintoresRouter = require('./routers/pintoresRouter');
 const principalRouter = require('./routers/principalRouter');
+const adminRouter = require('./routers/adminRouter');
 
-app.use('/mensajes', mensajesRouter);
-app.use('/cuadros', cuadrosRouter);
-app.use('/paises', paisesRouter);
-app.use('/ciudades', ciudadesRouter);
-app.use('/pintores', pintoresRouter);
+app.use('/APImensajes', mensajesRouter);
+app.use('/APIcuadros', cuadrosRouter);
+app.use('/APIpaises', paisesRouter);
+app.use('/APIciudades', ciudadesRouter);
+app.use('/APIpintores', pintoresRouter);
+app.use('/admin',adminRouter);
 app.use('',principalRouter);
 // Siempre que me refiera a mensajes o cuadros le coloco el prefijo.
 
