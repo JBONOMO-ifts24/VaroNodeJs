@@ -42,6 +42,8 @@ router.get("/muro",(req, res) => {
     }
   });
 });
+
+
 router.get("/api",(req, res) => {
   const token = req.cookies.token;
   if (!token) {
@@ -78,6 +80,9 @@ router.get("/obra",(req, res) => {
   });
 });
 
-//router.get("/admin",authMiddleware.authenticateTokenAdminPag,(req,res) => {res.render('adminbase.html')})
+router.get("/register",(req,res) => {
+  res.render('register.html');
+})
+
 // EXPORTAR ROUTERS
 module.exports = router;

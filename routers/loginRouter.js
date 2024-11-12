@@ -41,6 +41,7 @@ const upload = multer({
 
 //// METODO POST  PARA LOGIN Y REGISTER ////
 router.post('/register',upload.single('imagen'), controller.register);
+router.post('/loginAPI', controller.loginAPI);
 router.post('/login', controller.login);
 router.get('/login', (req, res) => {
     res.render('login.html');

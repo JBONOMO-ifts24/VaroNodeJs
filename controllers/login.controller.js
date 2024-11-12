@@ -10,24 +10,26 @@ dotenv.config();
 
 const register = (req, res) => {
     const { username, email, password } = req.body;
+    console.log(username);
+    console.log(email);
+    console.log(password);
     const hashedPassword = bcrypt.hashSync(password, 10);
     let archivo_foto = "";
     if (req.file) {
         archivo_foto = req.file.filename;
       }
-    console.log(username);
-    console.log(email);
-    console.log(hashedPassword);
+      console.log(hashedPassword);
   
     const query = 'INSERT INTO usuarios (username, email, password, archivo_foto) VALUES (?, ?, ?, ?)';
     db.query(query, [username, email, hashedPassword,archivo_foto], (err, results) => {
         console.log(results);
         console.log(err);
-        if (err) return res.status(500).send('Error en el servidor');
-        res.status(201).send('Usuario registrado');
+        if (err) return res.status(500).send({status:"Error",message:"Surgió un error"});
+        res.status(201).send({status:"ok",mensaje:`Usuario ${username} agregado`,redirect:"/"});
     });
 
 };
+
 
   
 
@@ -51,6 +53,27 @@ const login = (req, res) => {
           //res.status(200).send({ token });
           res.cookie('token', token, { httpOnly: true }); res.render('index.html', {user: username, loggedIn: true});
         });
+};
+
+const loginAPI = (req, res) => {
+    
+    const { username, password } = req.body;
+  
+    const query = 'SELECT * FROM usuarios WHERE username = ?';
+    db.query(query, [username], (err, results) => {
+      if (err) return res.status(500).send('Error en el servidor');
+      if (results.length === 0) return res.status(404).send('Usuario no encontrado');
+  
+      const user = results[0];
+      console.log(user);
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+  
+      
+      if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+  
+      const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
+      res.status(200).send({ token });
+    });
 };
 
 
@@ -126,6 +149,7 @@ const destroyUsuario = (req, res) => {
 module.exports = {
     register,
     login,
+    loginAPI,
     allUsuarios, 
     showUsuario,
     destroyUsuario, 
