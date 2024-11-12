@@ -18,6 +18,7 @@ app.use(express.json());
 nunjucks.configure('views', { autoescape: true, express: app });
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 const mensajesRouter = require('./routers/mensajesRouter');

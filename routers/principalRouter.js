@@ -84,5 +84,11 @@ router.get("/register",(req,res) => {
   res.render('register.html');
 })
 
+router.get("/links",(req,res) => {
+  res.render('links.html');
+});
+router.get("/bio",(req,res) => {
+  res.render('bio.html');
+});
 // EXPORTAR ROUTERS
 module.exports = router;
