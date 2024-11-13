@@ -1,0 +1,45 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Hola Admin!!!{% endblock %}
+
+{% block content %}
+    
+    <div class="container-fluid" data-auth="{{ auth }}">
+        <h1> Paises</h1>
+        <br />
+        <div class="col-md-12" id="listado">
+            <h1>Listado Paises</h1>
+            <div id="datosGuardados"></div>
+          </div>
+        <div class="row">
+          <div class="col-md-3" id="formulario">
+            <form id="miFormulario">
+              <div class="form-group">
+                <label for="nombre">Nombre País:</label>
+                <input
+                  type="text"
+                  id="nombre_pais"
+                  class="form-control"
+                  name="nombre_pais"
+                  required
+                /><br />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="subirPais()"
+              >
+                Nuevo País!
+              </button>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12" id="avisos"></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <script src="../public/js/adminpaises.js" defer></script>
+      
+{% endblock %}

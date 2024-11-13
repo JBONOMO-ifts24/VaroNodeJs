@@ -51,7 +51,7 @@ const login = (req, res) => {
       
           const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
           //res.status(200).send({ token });
-          res.cookie('token', token, { httpOnly: true }); res.render('index.html', {user: username, loggedIn: true});
+          res.cookie('token', token, { httpOnly: true ,secure: true, sameSite: 'Strict'}); res.render('index.html', {user: username, loggedIn: true});
         });
 };
 
