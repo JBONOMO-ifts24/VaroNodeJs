@@ -4,15 +4,18 @@
 
 {% block content %}
     
-    <div class="container-fluid" data-auth="{{ auth }}">
+    <div class="container-fluid">
         <h1> Paises</h1>
         <br />
-        <div class="col-md-12" id="listado">
-            <h1>Listado Paises</h1>
-            <div id="datosGuardados"></div>
-          </div>
         <div class="row">
-          <div class="col-md-3" id="formulario">
+        <div class="col-md-6" id="listado">
+            <h1>Listado Paises</h1>
+            <div id="datosGuardados" class="row"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" id="formulario">
+            <h2>Agregar país</h2>
             <form id="miFormulario">
               <div class="form-group">
                 <label for="nombre">Nombre País:</label>
@@ -27,7 +30,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                onclick="subirPais()"
+                onclick="subir()"
               >
                 Nuevo País!
               </button>

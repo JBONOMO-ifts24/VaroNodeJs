@@ -1,85 +1,152 @@
 document.addEventListener("DOMContentLoaded", (event) => {
+  checkAuth();
   mostrarDatos();
-  console.log(document.cookie.length);
-  console.log(document.cookie);
-  console.log(getCookie('token'));
-  console.log("Hola 🌎 !!!");
-  const token =document.querySelector(".container-fluid").dataset.auth;
-  console.log(token);
-
 });
 
-function subirMensaje() {
-  console.log("subir mensaje!");
-  const nombre_usuario = document.getElementById("nombre_usuario");
-  const mensaje = document.getElementById("mensaje");
-  const avi = document.getElementById("avisos");
+async function mostrarDatos() {
+  const divDatos = document.getElementById("datosGuardados");
+  divDatos.innerHTML="";
+  let res;
+  try {
+    console.log("Mostrar datos!");
+    const token = await checkAuth();
+    console.log("token " + token);
+    const consulta = await fetch("/APIpaises", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    res = await consulta.json();
+    console.log(res);
+  } catch (error) {
+    console.log("Error en la obtención de los datos");
+  }
+  
+  const ul = document.createElement("ul");
+  ul.setAttribute("class", "list-group");
+  divDatos.appendChild(ul);
+  res.forEach((dato) => {
+    console.log(dato);
+    const d = document.createElement("li");
+    d.setAttribute("class", "list-group-item list-group-item-dark");
+    d.innerHTML = `${dato.nombre} <button class='btn btn-primary' onclick= 'editar(${dato.idpaises})'>✏️</button><button class='btn btn-primary' onclick= 'borrar(${dato.idpaises})'>❌</button>`;
 
-  let nombre = nombre_usuario.value.trim(); //Se sacan los espacios en blanco adelante y atrás del string
+    ul.appendChild(d);
+  });
+}
+
+async function checkAuth() {
+  try {
+    const consulta = await fetch("/auth/check-auth");
+    const res = await consulta.json();
+    console.log(res);
+    return res.token;
+  } catch (error) {
+    console.log("Error en la obtención de la autorización.");
+  }
+}
+
+async function subir() {
+  let res;
+  const mensaje = document.getElementById("nombre_pais");
+  const avi = document.getElementById("avisos");
+  const token = await checkAuth();
+  console.log("token " + token);
+  //Se sacan los espacios en blanco adelante y atrás del string
   let men = mensaje.value.trim();
 
   //Validación de los datos en los campos nombre y mensaje
-  if (nombre.length < 3 || men.length < 3) {
+  if (men.length < 3) {
     const p = document.createElement("div");
     let mensaje_e =
       '<div class="alert alert-danger" role="alert">Los datos ingresados no son correctos 😰</div>';
 
     p.innerHTML = mensaje_e;
     avi.appendChild(p);
-    nombre_usuario.value = "";
     mensaje.value = "";
 
     setTimeout(() => {
       avi.innerHTML = "";
     }, 4000);
   } else {
-    fetch("/APImensajes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nombre_usuario: nombre,
-        mensaje: men,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        nombre_usuario.value = "";
-        mensaje.value = "";
+    try {
+      const consulta = await fetch("/APIpaises", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nombre: men,
+        }),
+      });
+      res = await consulta.json();
+      console.log(res);
+      const p = document.createElement("div");
+    let mensaje_e ='<div class="alert alert-danger" role="alert"> 🗺️País agregado🗺️ </div>';
 
-        alert("😄 Mensaje enviado con éxito! 😄");
-      })
-      .catch((error) => console.error("Error:", error));
-    avi.innerHTML = "";
+    p.innerHTML = mensaje_e;
+    avi.appendChild(p);
+    mensaje.value = "";
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
     mostrarDatos();
-  }
-}
+    } catch (error) {
+      console.log("Error en la obtención de datos .");
+      const p = document.createElement("div");
+      let mensaje_e ='<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
 
-function mostrarDatos() {
-  console.log("Mostrar datos!");
-  fetch("/APIpaises",{method: 'GET',headers:{Authorization: `Bearer ${document.querySelector(".container-fluid").dataset.auth}`}})
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      const mensajesContainer = document.getElementById("datosGuardados");
-      mensajesContainer.innerHTML = "";
-    });
-}
+      p.innerHTML = mensaje_e;
+      avi.appendChild(p);
+      mensaje.value = "";
 
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+      setTimeout(() => {
+        avi.innerHTML = "";
+      }, 4000);
     }
-    return "No hay cookie token";
   }
+}
+
+async function borrar(id) {
+  let res;
+  
+  const avi = document.getElementById("avisos");
+  const token = await checkAuth();
+  console.log("token " + token);
+  //Validación de los datos en los campos nombre y mensaje
+    try {
+      const consulta = await fetch(`/APIpaises/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      res = await consulta.json();
+      console.log(res);
+      const p = document.createElement("div");
+    let mensaje_e ='<div class="alert alert-primary" role="alert">💀País eliminado💀</div>';
+
+    p.innerHTML = mensaje_e;
+    avi.appendChild(p);
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+    mostrarDatos();
+    } catch (error) {
+      console.log("Error en la obtención de datos .");
+      const p = document.createElement("div");
+      let mensaje_e ='<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
+
+      p.innerHTML = mensaje_e;
+      avi.appendChild(p);
+      setTimeout(() => {
+        avi.innerHTML = "";
+      }, 4000);
+    }
+  
+
+}
+async function editar(id) {}

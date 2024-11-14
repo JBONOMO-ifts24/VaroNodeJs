@@ -62,7 +62,7 @@ router.delete('/usuarios/:idusuario', authMiddleware.authenticateTokenAdmin, con
 //MÉTODO de LOGOUT
 router.get('/logout', (req, res) => { res.clearCookie('token'); res.render('index.html'); });
 
-router.get('/check-auth',authMiddleware.authenticateTokenPagina, (req, res) => {res.status(200).send(`Estas registradou!!`)});
+router.get('/check-auth',authMiddleware.authenticateTokenPagina, (req, res) => {res.status(200).send({status:"ok",token:req.cookies.token})});
 
 // EXPORTAR ROUTERS
 module.exports = router;
