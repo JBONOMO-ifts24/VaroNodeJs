@@ -149,4 +149,48 @@ async function borrar(id) {
   
 
 }
-async function editar(id) {}
+async function editar(id) {
+  //se abre un dialogo para cargar el nuevo valor para el dato a editar.
+  let dato_cambiar = window.prompt("Ingresá por favor el nuevo valor");
+  console.log(dato_cambiar);
+  console.log(id);
+  const avi = document.getElementById("avisos");
+  const token = await checkAuth();
+  console.log("token " + token);
+  //Validación de los datos en los campos nombre y mensaje
+    try {
+      const consulta = await fetch(`/APIpaises/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nombre: dato_cambiar,
+        }),
+      });
+      res = await consulta.json();
+      console.log(res);
+      const p = document.createElement("div");
+    let mensaje_e ='<div class="alert alert-primary" role="alert">📝País modificado📝</div>';
+
+    p.innerHTML = mensaje_e;
+    avi.appendChild(p);
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+    mostrarDatos();
+    } catch (error) {
+      console.log("Error en la obtención de datos .");
+      const p = document.createElement("div");
+      let mensaje_e ='<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
+
+      p.innerHTML = mensaje_e;
+      avi.appendChild(p);
+      setTimeout(() => {
+        avi.innerHTML = "";
+      }, 4000);
+    }
+  
+
+}
