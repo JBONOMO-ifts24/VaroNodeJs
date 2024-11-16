@@ -72,7 +72,7 @@ const storePintor = (req, res) => {
 const updatePintor = (req, res) => {
     const {idpintor} = req.params;
     const {nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad} = req.body;
-    const sql ="UPDATE ciudad SET nombre_pintor = ? fecha_nac =? fecha_mue = ? lugar_nac = ? biograf_pintor = ? WHERE idpintores = ?";
+    const sql ="UPDATE pintores SET nombre_pintor = ? fecha_nac =? fecha_mue = ? lugar_nac = ? biograf_pintor = ? WHERE idpintores = ?";
     db.query(sql,[nombre_pintor,fecha_nac,fecha_mue,ciudad,biograf_pintor,idpintor], (error, result) => {
         console.log(result);
         if(error){

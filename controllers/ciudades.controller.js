@@ -43,7 +43,8 @@ const showCiudad = (req, res) => {
 //// METODO POST  ////
 const storeCiudad = (req, res) => {
     const {pais, ciudad} = req.body;
-
+    console.log(pais);
+    console.log(ciudad);
     const sqla = "SELECT idpaises FROM paises WHERE nombre = ?";
     const sql = "INSERT INTO ciudades (nombre,pais) VALUES (?,?)";
     db.query(sqla,[pais], (error, resul) => {
@@ -69,8 +70,17 @@ const storeCiudad = (req, res) => {
 const updateCiudad = (req, res) => {
     const {idciudad} = req.params;
     const {nombre, pais} = req.body;
-    const sql ="UPDATE ciudad SET nombre = ? pais =? WHERE idciudades = ?";
-    db.query(sql,[nombre,pais,idciudad], (error, result) => {
+    console.log(nombre);
+    console.log(pais);
+    console.log(idciudad);
+    const sqla = "SELECT idpaises FROM paises WHERE nombre = ?";
+    const sql ="UPDATE ciudades SET nombre = ?,  pais =? WHERE idciudades = ?";
+    db.query(sqla,[pais], (error, resul) => {
+        console.log(resul[0].idpaises);
+        if(error){
+            return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
+        }
+    db.query(sql,[nombre, resul[0].idpaises, idciudad], (error, result) => {
         console.log(result);
         if(error){
             return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
@@ -82,7 +92,8 @@ const updateCiudad = (req, res) => {
         const mens = {...req.body, ...req.params}; // ... reconstruir el objeto del body
 
         res.json(mens); // mostrar el elmento que existe
-    });     
+    });
+});      
 };
 
 
