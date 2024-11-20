@@ -1,0 +1,176 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Admin Pintores{% endblock %}
+
+{% block content %}
+    
+    <div class="container-fluid">
+        <h1> Pintores</h1>
+        <br />
+        <div class="row">
+        <div class="col-md-6" id="listado">
+            <h1>Listado Pintores</h1>
+            <div id="datosGuardados" class="row"></div>
+          </div>
+          <div class="col-md-6 d-none" id="formu_modifica">
+            <div class="d-flex">
+            <button
+                type="button"
+                onclick="ocultarFormu()"
+                class="btn btn-primary btn-sm ml-auto"
+              >
+                X
+              </button>
+            </div>
+            <h1>Modificación de datos</h1>
+            <form id="FormularioModif"></form>
+            <div class="form-group">
+                <input
+                  type="text"
+                  id="id_pintor"
+                  class="form-control"
+                  name="nombre_ciudad_mod"
+                  readonly
+                />    
+            </div>
+            <div class="form-group">
+            <label for="nombre_pintor_mod">Nombre Pintor:</label>
+                <input
+                  type="text"
+                  id="nombre_pintor_mod"
+                  class="form-control"
+                  name="nombre_pintor_mod"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="fecha_nac_mod">Fecha de nacimiento:</label>
+                <input
+                  type="text"
+                  id="fecha_nac_mod"
+                  class="form-control"
+                  name="fecha_nac_mod"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="fecha_mue_mod">Fecha de muerte: --Dejar en blanco si está vivo--</label>
+                <input
+                  type="text"
+                  id="fecha_mue_mod"
+                  class="form-control"
+                  name="fecha_mue_mod"
+                  
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="lugar_nac_mod">Lugar nacimiento: </label>
+                <input
+                  type="text"
+                  id="lugar_nac_mod"
+                  class="form-control"
+                  name="lugar_nac_mod"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="biograf_pintor_mod">Biografía:</label>
+                <input
+                  type="text"
+                  id="biograf_pintor_mod"
+                  class="form-control"
+                  name="biograf_pintor_mod"
+                  required
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick= "editar(document.getElementById('id_pintor').value)"
+              >
+                Modificar
+              </button>
+            </form> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 d-block" id="formulario">
+            
+            <h2>Agregar Pintores</h2>
+            <form id="miFormulario">
+              <div class="form-group">
+                <label for="nombre">Nombre Pintor:</label>
+                <input
+                  type="text"
+                  id="nombre_pintor"
+                  class="form-control"
+                  name="nombre_pintor"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="fecha_nac">Fecha de nacimiento:</label>
+                <input
+                  type="text"
+                  id="fecha_nac"
+                  class="form-control"
+                  name="fecha_nac"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="nombre">Fecha de muerte: --Dejar en blanco si está vivo--</label>
+                <input
+                  type="text"
+                  id="fecha_mue"
+                  class="form-control"
+                  name="fecha_mue"
+                  
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="nombre">Lugar nacimiento: </label>
+                <input
+                  type="text"
+                  id="lugar_nac"
+                  class="form-control"
+                  name="lugar_nac"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="nombre">Biografía:</label>
+                <input
+                  type="text"
+                  id="biograf_pintor"
+                  class="form-control"
+                  name="biograf_pintor"
+                  required
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="subir()"
+              >
+                Nuevo Pintor!
+              </button>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12" id="avisos"></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <script src="../public/js/adminpintores.js" defer></script>
+      
+{% endblock %}
