@@ -45,7 +45,7 @@ const upload = multer({
 
 //// METODO GET  /////
 
-// Para todos los cuadros
+// Para todos los cuadro s
 router.get('/', controller.allCuadros);
 
 // Para un mensaje
