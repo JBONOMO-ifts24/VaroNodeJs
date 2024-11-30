@@ -1,15 +1,15 @@
 {% extends "adminbase.html" %}
 
-{% block title %}Admin Usuarios{% endblock %}
+{% block title %}Admin Roles{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
-    <h1> Usuarios</h1>
+    <h1> Roles Usuarios</h1>
     <br />
     <div class="row">
         <div class="col-md-6" id="listado">
-            <h1>Listado de Usuarios</h1>
+            <h1>Listado de Usuarios con su Rol</h1>
             <div id="datosGuardados" class="row"></div>
         </div>
         <div class="col-md-6 d-none" id="formu_modifica">
@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-md-12 d-block" id="formulario">
 
-            <h2>Agregar Usuario</h2>
+            <h2>Agregar Rol a un Usuario</h2>
             <form id="miFormulario">
                 <div class="form-group">
                     <label for="nombre_usuario">Nombre Usuario:</label>
@@ -67,7 +67,7 @@
                     <input type="file" id="imagen" class="form-control-file" name="imagen" required />
                 </div>
                 <button type="button" class="btn btn-primary" onclick="subir()">
-                    Nuevo Usuario!
+                    Nuevo Rol Usuario!
                 </button>
             </form>
         </div>
@@ -76,16 +76,10 @@
         
     </div>
     <div class="row">
-        <div class="col-md-12" id="roles_usuario">
-            <h2>Roles Usuario</h2>
-            <p>Para ver y asignar nuevos roles a un usuario, hacer click <a href="./roles">aquí</a></p>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12" id="avisos"></div>
     </div>
 </div>
 <br />
-<script src="../public/js/adminusuarios.js" defer></script>
+<script src="" defer></script>
 
 {% endblock %}

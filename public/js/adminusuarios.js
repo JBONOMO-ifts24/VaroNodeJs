@@ -9,8 +9,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let res;
     try {
       console.log("Mostrar datos!");
-      const consulta = await fetch("/APImensajes", {
+      const token = await checkAuth();
+      console.log("token " + token);
+      const consulta = await fetch("/auth/usuarios", {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       res = await consulta.json();
       console.log(res);
@@ -25,8 +30,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       console.log(dato);
       const d = document.createElement("li");
       d.setAttribute("class", "list-group-item list-group-item-dark");
-      d.setAttribute("id", `${dato.idmensajes}`);
-      d.innerHTML = `${dato.nombre_usuario} dijo: ${dato.mensaje} ¿Visible?: ${dato.visible} <button class='btn btn-primary' onclick= 'modifDato(${dato.idmensajes})'>✏️</button><button class='btn btn-primary' onclick= 'borrar(${dato.idmensajes})'>❌</button>`;
+      d.setAttribute("id", `${dato.id}`);
+      d.innerHTML = ` <img src="../uploads/${dato.archivo_foto}" alt="Foto" class="rounded-circle max-width: 100%" style="width: 60px"><strong> ${dato.username} <strong> <button class='btn btn-primary' onclick= 'modifDato(${dato.id})'>✏️</button><button class='btn btn-primary' onclick= 'borrar(${dato.id})'>❌</button>`;
   
       ul.appendChild(d);
     });
@@ -45,32 +50,44 @@ document.addEventListener("DOMContentLoaded", (event) => {
   
   async function subir() {
     let res;
-    const nombre_usuario = document.getElementById("nombre_usuario");
-    const mensaje = document.getElementById("mensaje");
+    const nombre_pintor = document.getElementById("nombre_pintor");
+    const fecha_nac = document.getElementById("fecha_nac");
+    const fecha_mue = document.getElementById("fecha_mue");
+    const lugar_nac = document.getElementById("lugar_nac");
+    const biograf_pintor = document.getElementById("biograf_pintor");
     const avi = document.getElementById("avisos");
+    const token = await checkAuth();
+    console.log("token " + token);
   
     //Validación de los datos en los campos nombre y mensaje
     try {
-      const consulta = await fetch("/APImensajes", {
+      const consulta = await fetch("/APIpintores", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          nombre_usuario: nombre_usuario.value,
-          mensaje: mensaje.value
+          nombre_pintor: nombre_pintor.value,
+          fecha_nac: fecha_nac.value,
+          fecha_mue: fecha_mue.value,
+          ciudad: lugar_nac.value,
+          biograf_pintor: biograf_pintor.value
         }),
       });
       res = await consulta.json();
       console.log(res);
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-danger" role="alert"> Mensaje agregado!!! </div>';
+        '<div class="alert alert-danger" role="alert"> 🎨Pintor agregado🎨 </div>';
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
-      nombre_usuario.value = "";
-      mensaje.value = "";
+      nombre_pintor.value = "";
+      fecha_nac.value = "";
+      fecha_mue.value = "";
+      lugar_nac.value = "";
+      biograf_pintor.value ="";
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);
@@ -83,8 +100,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
-      nombre_usuario.value = "";
-      mensaje.value = "";
+      nombre_pintor.value = "";
+      fecha_nac.value = "";
+      fecha_mue.value = "";
+      lugar_nac.value = "";
+      biograf_pintor.value ="";
   
       setTimeout(() => {
         avi.innerHTML = "";
@@ -100,7 +120,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     console.log("token " + token);
     //Validación de los datos en los campos nombre y mensaje
     try {
-      const consulta = await fetch(`/APIpintores/${id}`, {
+      const consulta = await fetch(`/auth/usuarios/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +131,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       console.log(res);
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-primary" role="alert">💀Pintor eliminado💀</div>';
+        '<div class="alert alert-primary" role="alert">💀Usuario eliminado💀</div>';
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
@@ -133,36 +153,41 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
   async function editar(id) {
-    const nombre_usuario = document.getElementById("nombre_usuario_mod");
-    const mensaje = document.getElementById("mensaje_mod");
-    const visible = document.getElementById("visible_mod");
+    const nombre_pintor = document.getElementById("nombre_pintor_mod");
+    const fecha_nac = document.getElementById("fecha_nac_mod");
+    const fecha_mue = document.getElementById("fecha_mue_mod");
+    const lugar_nac = document.getElementById("lugar_nac_mod");
+    const biograf_pintor = document.getElementById("biograf_pintor_mod");
 
     const avi = document.getElementById("avisos");
     const token = await checkAuth();
     console.log("token " + token);
     //Validación de los datos en los campos nombre y mensaje
     try {
-      const consulta = await fetch(`/APImensajes/${id}`, {
+      const consulta = await fetch(`/APIpintores/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            nombre_usuario: nombre_usuario.value,
-            mensaje: mensaje.value,
-            visible: visible.value
-            
+            nombre_pintor: nombre_pintor.value,
+            fecha_nac: fecha_nac.value,
+            fecha_mue: fecha_mue.value,
+            ciudad: lugar_nac.value,
+            biograf_pintor: biograf_pintor.value
         }),
       });
       res = await consulta.json();
       console.log(res);
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-primary" role="alert">📝Mensaje modificado📝</div>';
-        mensaje.value = "";
-        nombre_usuario.value = "";
-        visible.value = "";
+        '<div class="alert alert-primary" role="alert">📝Pintor modificado📝</div>';
+        nombre_pintor.value = "";
+        fecha_nac.value = "";
+        fecha_mue.value = "";
+        lugar_nac.value = "";
+        biograf_pintor.value ="";
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
@@ -175,9 +200,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const p = document.createElement("div");
       let mensaje_e =
         '<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
-        mensaje.value = "";
-        nombre_usuario.value = "";
-        visible.value = "";
+        nombre_pintor.value = "";
+        fecha_nac.value = "";
+        fecha_mue.value = "";
+        lugar_nac.value = "";
+        biograf_pintor.value ="";
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
@@ -187,10 +214,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
   
-  function modifDato(id) {
+  async function modifDato(id) {
     const formuModifica = document.getElementById("formu_modifica");
     const formuNuevo = document.getElementById("formulario");
-    const idciu = document.getElementById("id_mensaje");
+    const idciu = document.getElementById("id_usuario_mod");
+    const mail = document.getElementById("mail_mod");
+
+
   
     if (formuModifica.classList.contains("d-none")) {
       formuModifica.classList.remove("d-none");
@@ -201,8 +231,26 @@ document.addEventListener("DOMContentLoaded", (event) => {
       formuNuevo.classList.remove("d-block");
       formuNuevo.classList.add("d-none");
     }
+
+    try {
+        console.log("Mostrar dato!");
+        const token = await checkAuth();
+        console.log("token " + token);
+        const consulta = await fetch(`/auth/usuarios/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        res = await consulta.json();
+        console.log(res);
+        mail.value = res.email
+      } catch (error) {
+        console.log("Error en la obtención de los datos");
+      }
   
     idciu.value = id;
+    
   }
   
   function ocultarFormu() {

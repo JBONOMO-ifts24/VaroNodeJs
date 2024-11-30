@@ -103,7 +103,7 @@ const authenticateTokenAdminPag = (req, res, next) => {
           .status(500)
           .json({ error: "ERROR: Intente más tarde por favor" });
       }
-      if (result.affectedRows == 0) {
+      if (result.length < 1) {
         return res
           .status(404)
           .send({

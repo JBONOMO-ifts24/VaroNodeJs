@@ -51,7 +51,7 @@ const login = (req, res) => {
       
           const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
           //res.status(200).send({ token });
-          res.cookie('token', token, { httpOnly: true ,secure: true, sameSite: 'Strict'}); res.render('index.html', {user: username, loggedIn: true});
+          res.cookie('token', token, { httpOnly: true ,secure: true, sameSite: 'Strict'}); res.redirect('/');
         });
 };
 
@@ -74,6 +74,44 @@ const loginAPI = (req, res) => {
       const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
       res.status(200).send({ token });
     });
+};
+
+    const agregarRoles = (req,res) => {
+        const { username, rol } = req.body;
+        //Buscamos el id del usuario
+        const query = 'SELECT idusuarios FROM usuarios WHERE username = ?';
+        const sql = "INSERT INTO roles_usuarios (idroles,idusuarios) VALUES (?,?)";
+
+        db.query(query,[username], (error, resul) => {
+            console.log(resul[0].idusuarios);
+            const idus = resul[0].idusuarios;
+            if(error){
+                return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
+            }
+        db.query(sql,[rol,idus], (error, result) => {
+            console.log(result);
+            if(error){
+                return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
+            }
+            if(result.affectedRows == 0){
+                return res.status(404).send({error : "ERROR: La ciudad a modificar no existe"});
+            };
+            
+            const mens = {...req.body, ...req.params}; // ... reconstruir el objeto del body
+    
+            res.json(mens); // mostrar el elmento que existe
+        });
+    });
+        
+    }
+const allRoles = (req, res) => {
+    const sql = "SELECT * FROM roles_usuarios;";
+    db.query(sql, (error, rows) => {
+        if(error){
+            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
+        }
+        res.json(rows);
+    }); 
 };
 
 
@@ -153,5 +191,7 @@ module.exports = {
     allUsuarios, 
     showUsuario,
     destroyUsuario, 
-    updateUsuario
+    updateUsuario,
+    agregarRoles,
+    allRoles
 };

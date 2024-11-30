@@ -60,9 +60,14 @@ router.delete('/usuarios/:idusuario', authMiddleware.authenticateTokenAdmin, con
 //Delete sólo van a poder usarlo los usuarios ADMIN
 
 //MÉTODO de LOGOUT
-router.get('/logout', (req, res) => { res.clearCookie('token'); res.render('index.html'); });
+router.get('/logout', (req, res) => { res.clearCookie('token'); res.redirect('/') });
 
 router.get('/check-auth',authMiddleware.authenticateTokenPagina, (req, res) => {res.status(200).send({status:"ok",token:req.cookies.token})});
+
+//ROLES 
+router.get('/roles', (req,res) => authMiddleware.authenticateTokenAdmin, controller.allRoles);
+router.post('/roles', (req,res) => authMiddleware.authenticateTokenAdmin, controller.agregarRoles);
+
 
 // EXPORTAR ROUTERS
 module.exports = router;
