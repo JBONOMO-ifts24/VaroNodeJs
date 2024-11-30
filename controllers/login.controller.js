@@ -112,7 +112,7 @@ const allRoles = (req, res) => {
         }
         res.json(rows);
     }); 
-};
+}; 
 
 
 // Para mostrar todos los usuarios
