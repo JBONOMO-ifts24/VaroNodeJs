@@ -32,6 +32,7 @@ router.get("/", (req, res) => {
               loggedIn: true,
               user: user.username,
               admin: false,
+              imagen: user.imagen
             });
           }
           console.log("Admin Autorizado!!!");
@@ -39,6 +40,7 @@ router.get("/", (req, res) => {
             loggedIn: true,
             user: user.username,
             admin: true,
+            imagen: user.imagen
           });
         });
       } catch (err) {
@@ -70,7 +72,8 @@ router.get("/muro", (req, res) => {
     } else {
       return res.render("muro.html", {
         loggedIn: true,
-        user: user.username,
+        user: user.username
+    
       });
     }
   });

@@ -49,7 +49,7 @@ const login = (req, res) => {
           //if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
           if (!isPasswordValid) return res.redirect('login');
       
-          const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
+          const token = jwt.sign({ id: user.idusuarios, username: user.username, imagen: user.archivo_foto}, process.env.SECRET_KEY, { expiresIn: '1h' });
           //res.status(200).send({ token });
           res.cookie('token', token, { httpOnly: true ,secure: true, sameSite: 'Strict'}); res.redirect('/');
         });

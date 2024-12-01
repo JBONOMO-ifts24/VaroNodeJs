@@ -96,6 +96,7 @@ const authenticateTokenAdminPag = (req, res, next) => {
       "SELECT * FROM roles_usuarios WHERE id_usuarios = ? AND id_roles = 1;";
     const usuario = decoded.id;
     const username = decoded.username;
+    const imagen = decoded.imagen;
     db.query(sql, [usuario], (error, result) => {
       console.log(result);
       if (error) {
@@ -112,6 +113,7 @@ const authenticateTokenAdminPag = (req, res, next) => {
       }
       console.log("Admin Autorizado!!!");
       req.user = username;
+      req.imagen = imagen
       next();
     });
   } catch (err) {

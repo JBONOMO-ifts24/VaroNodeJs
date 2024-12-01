@@ -31,18 +31,14 @@
       <!-- Iconito -->
       <a class="navbar-brand" href="/">
         <img
-          src="https://cdn.glitch.global/df4388bd-2689-4901-a44d-29982287bbad/RVbirdLogo.png?v=1717688799704"
-          alt="logo"
-          style="width: 60px"
-        />
-      </a>
-      <img
         id="imgJum"
         class="mx-auto d-block img-fluid"
         src="https://cdn.glitch.global/df4388bd-2689-4901-a44d-29982287bbad/FirmaVaro.png?v=1717674363716"
         alt="firma"
         style="width: 120px"
       />
+      </a>
+      
       <button
         class="navbar-toggler"
         type="button"
@@ -79,9 +75,12 @@
       </div>
       <div id="logueo" style="float: right">
         {% if loggedIn %} 
-          <p>Estás logueado como:</p> 
-          <p><strong>{{ user }}</strong></p> 
-          <a href="/auth/logout">Logout</a>
+          <p><strong>{{ user }}</strong> <img
+            src= " ./uploads/{{ imagen }}"
+            alt="Foto"
+            style="width: 60px"
+          /><a href="/auth/logout">Logout</a></p> 
+          
            {% else %} 
           <a class="btn btn-secondary" href="/auth/login">Log in</a>
           <br>
