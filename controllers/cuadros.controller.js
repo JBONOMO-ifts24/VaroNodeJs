@@ -19,7 +19,7 @@ const allCuadros = (req, res) => {
     if (error) {
       return res
         .status(500)
-        .json({ error: "ERROR: Intente mas tarde por favor" });
+        .json({ error: "ERROR: Intente más tarde por favor" });
     }
     res.json(rows);
   });

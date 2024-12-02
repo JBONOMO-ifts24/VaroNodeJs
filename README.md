@@ -4,6 +4,11 @@ Base de datos en MySQL
 Uso de Mulster para subir archivos
 Para login: Json Web Token-
 
+# Para hacer
+- Agregar que se vean las imágenes en ADMIN/cuadros
+- Ver como se modifican los cuadros (controller)
+- Cambiar mensajes: En la página de admin hay que estar logueado con permisos de admin para borrar un mensaje.
+
 # Endpoints
 ## Autenticación
 - POST /auth/register = Registrar usuario. (datos requeridos: username, email, password)

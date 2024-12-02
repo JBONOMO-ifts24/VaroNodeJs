@@ -6,34 +6,50 @@
 {% block content %}
   <h2>Hola Varo Fans!!!</h2>
   <h2>Bienvenidos a la página de Remedios Varo 🎨 </h2>
+  <div id="demo" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
 
-  <h1>Api Cuadros</h1>
-      <p>
-        Aquí encontrarás cuadros de Remedios Varo, y artistas relacionados con
-        información sobre los mismos.
-      </p>
-      <p>Estos son los comandos:</p>
-      <ul>
-        <li>
-          <strong>GET /cuadros</strong>: Acá sale el listado de todos los
-          cuadros
-        </li>
-      </ul>
-      <p>
-        Para los siguientes comandos vas a necesitar tener una clave de
-        administrador.
-      </p>
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        class="rounded mx-auto d-block"
+        style="height: 500px"
+        src="https://cdn.glitch.global/df4388bd-2689-4901-a44d-29982287bbad/adictos-a-remedios-varo-high.jpg?v=1717674402918"
+        alt="fot01"
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        class="rounded mx-auto d-block"
+        style="height: 500px"
+        src="https://cdn.glitch.global/df4388bd-2689-4901-a44d-29982287bbad/Cat.135-Paraiso-De-Los-Gatos-1.png?v=1717674374318"
+        alt="fot02"
+      />
+    </div>
+    <div class="carousel-item">
+      <img
+        class="rounded mx-auto d-block"
+        style="height: 500px"
+        src="https://cdn.glitch.global/df4388bd-2689-4901-a44d-29982287bbad/remedios-varo-400x400.jpeg?v=1718023670070"
+        alt="fot03k"
+      />
+    </div>
+  </div>
 
-      <ul>
-        <li><strong>POST /cuadros</strong>: Para subir un nuevo cuadro</li>
-        <li>
-          <strong>PUT /cuadros/ID=(numero de cuadro)</strong>: Para modificar un
-          cuadro que ya existe
-        </li>
-        <li>
-          <strong>DELETE /cuadros/ID=(numero de cuadro)</strong>: Para borrar un
-          cuadro
-        </li>
-      </ul>
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+<br>
 {% endblock %}
 

@@ -11,7 +11,7 @@ const db = require("../db/db");
 
 //// METODO GET  /////
 
-// Para todos las peliculas
+// Para todos los mensajes;
 const allMensajes = (req, res) => {
     const sql = "SELECT * FROM mensajes";
     db.query(sql, (error, rows) => {
@@ -58,12 +58,13 @@ const storeMensaje = (req, res) => {
 //// METODO PUT  ////
 const updateMensaje = (req, res) => {
     const {idmensaje} = req.params;
-    const {mensaje, nombre_usuario} = req.body;
-    const sql ="UPDATE mensajes SET mensaje = ?, nombre_usuario = ?  WHERE idmensajes = ?";
+    const {mensaje, nombre_usuario, visible} = req.body;
+    const sql ="UPDATE mensajes SET mensaje = ?, nombre_usuario = ?, visible = ?  WHERE idmensajes = ?";
+    console.log("modificación de mensaje");
     console.log(idmensaje);
     console.log(mensaje);
     console.log(nombre_usuario);
-    db.query(sql,[mensaje, nombre_usuario, idmensaje], (error, result) => {
+    db.query(sql,[mensaje, nombre_usuario, visible, idmensaje], (error, result) => {
         console.log(result);
         if(error){
             return res.status(500).json({error : "ERROR: Intente más tarde por favor"});

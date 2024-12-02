@@ -10,24 +10,26 @@ dotenv.config();
 
 const register = (req, res) => {
     const { username, email, password } = req.body;
+    console.log(username);
+    console.log(email);
+    console.log(password);
     const hashedPassword = bcrypt.hashSync(password, 10);
     let archivo_foto = "";
     if (req.file) {
         archivo_foto = req.file.filename;
       }
-    console.log(username);
-    console.log(email);
-    console.log(hashedPassword);
+      console.log(hashedPassword);
   
     const query = 'INSERT INTO usuarios (username, email, password, archivo_foto) VALUES (?, ?, ?, ?)';
     db.query(query, [username, email, hashedPassword,archivo_foto], (err, results) => {
         console.log(results);
         console.log(err);
-        if (err) return res.status(500).send('Error en el servidor');
-        res.status(201).send('Usuario registrado');
+        if (err) return res.status(500).send({status:"Error",message:"Surgió un error"});
+        res.status(201).send({status:"ok",mensaje:`Usuario ${username} agregado`,redirect:"/"});
     });
 
 };
+
 
   
 
@@ -44,12 +46,73 @@ const login = (req, res) => {
           console.log(user);
           const isPasswordValid = bcrypt.compareSync(password, user.password);
       
-          if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+          //if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+          if (!isPasswordValid) return res.redirect('login');
       
-          const token = jwt.sign({ id: user.idusuarios }, process.env.SECRET_KEY, { expiresIn: '1h' });
-          res.status(200).send({ token });
+          const token = jwt.sign({ id: user.idusuarios, username: user.username, imagen: user.archivo_foto}, process.env.SECRET_KEY, { expiresIn: '1h' });
+          //res.status(200).send({ token });
+          res.cookie('token', token, { httpOnly: true ,secure: true, sameSite: 'Strict'}); res.redirect('/');
         });
 };
+
+const loginAPI = (req, res) => {
+    
+    const { username, password } = req.body;
+  
+    const query = 'SELECT * FROM usuarios WHERE username = ?';
+    db.query(query, [username], (err, results) => {
+      if (err) return res.status(500).send('Error en el servidor');
+      if (results.length === 0) return res.status(404).send('Usuario no encontrado');
+  
+      const user = results[0];
+      console.log(user);
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+  
+      
+      if (!isPasswordValid) return res.status(401).send('Contraseña incorrecta');
+  
+      const token = jwt.sign({ id: user.idusuarios, username: user.username}, process.env.SECRET_KEY, { expiresIn: '1h' });
+      res.status(200).send({ token });
+    });
+};
+
+    const agregarRoles = (req,res) => {
+        const { username, rol } = req.body;
+        //Buscamos el id del usuario
+        const query = 'SELECT idusuarios FROM usuarios WHERE username = ?';
+        const sql = "INSERT INTO roles_usuarios (idroles,idusuarios) VALUES (?,?)";
+
+        db.query(query,[username], (error, resul) => {
+            console.log(resul[0].idusuarios);
+            const idus = resul[0].idusuarios;
+            if(error){
+                return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
+            }
+        db.query(sql,[rol,idus], (error, result) => {
+            console.log(result);
+            if(error){
+                return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
+            }
+            if(result.affectedRows == 0){
+                return res.status(404).send({error : "ERROR: La ciudad a modificar no existe"});
+            };
+            
+            const mens = {...req.body, ...req.params}; // ... reconstruir el objeto del body
+    
+            res.json(mens); // mostrar el elmento que existe
+        });
+    });
+        
+    }
+const allRoles = (req, res) => {
+    const sql = "SELECT * FROM roles_usuarios;";
+    db.query(sql, (error, rows) => {
+        if(error){
+            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
+        }
+        res.json(rows);
+    }); 
+}; 
 
 
 // Para mostrar todos los usuarios
@@ -124,8 +187,11 @@ const destroyUsuario = (req, res) => {
 module.exports = {
     register,
     login,
+    loginAPI,
     allUsuarios, 
     showUsuario,
     destroyUsuario, 
-    updateUsuario
+    updateUsuario,
+    agregarRoles,
+    allRoles
 };

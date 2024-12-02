@@ -50,7 +50,6 @@ const storePintor = (req, res) => {
     const sqla = "SELECT idciudades FROM ciudades WHERE nombre = ?";
     const sql = "INSERT INTO pintores (nombre_pintor,fecha_nac, fecha_mue, lugar_nac, biograf_pintor) VALUES (?,?,?,?,?)";
     db.query(sqla,[ciudad], (error, resul) => {
-        console.log(resul[0].idpaises);
         if(error){
             return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
         }
@@ -72,14 +71,14 @@ const storePintor = (req, res) => {
 const updatePintor = (req, res) => {
     const {idpintor} = req.params;
     const {nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad} = req.body;
-    const sql ="UPDATE ciudad SET nombre_pintor = ? fecha_nac =? fecha_mue = ? lugar_nac = ? biograf_pintor = ? WHERE idpintores = ?";
+    const sql ="UPDATE pintores SET nombre_pintor = ?, fecha_nac =?, fecha_mue = ?, lugar_nac = ?, biograf_pintor = ? WHERE idpintores = ?";
     db.query(sql,[nombre_pintor,fecha_nac,fecha_mue,ciudad,biograf_pintor,idpintor], (error, result) => {
         console.log(result);
         if(error){
             return res.status(500).json({error : "ERROR: Intente más tarde por favor"});
         }
         if(result.affectedRows == 0){
-            return res.status(404).send({error : "ERROR: La ciudad a modificar no existe"});
+            return res.status(404).send({error : "ERROR: El pintor a modificar no existe"});
         };
         
         const mens = {...req.body, ...req.params}; // ... reconstruir el objeto del body
@@ -91,9 +90,9 @@ const updatePintor = (req, res) => {
 
 //// METODO DELETE ////
 const destroyPintor = (req, res) => {
-    const {idciudad} = req.params;
+    const {idpintor} = req.params;
     const sql = "DELETE FROM pintores WHERE idpintores = ?";
-    db.query(sql,[idciudad], (error, result) => {
+    db.query(sql,[idpintor], (error, result) => {
         console.log(result);
         if(error){
             return res.status(500).json({error : "ERROR: Intente más tarde por favor"});

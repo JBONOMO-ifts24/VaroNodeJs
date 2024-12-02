@@ -1,0 +1,72 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Admin Mensajes{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1> Mensajes</h1>
+    <br />
+    <div class="row">
+        <div class="col-md-6" id="listado">
+            <h1>Listado Mensajes</h1>
+            <div id="datosGuardados" class="row"></div>
+        </div>
+        <div class="col-md-6 d-none" id="formu_modifica">
+            <div class="d-flex">
+                <button type="button" onclick="ocultarFormu()" class="btn btn-primary btn-sm ml-auto">
+                    X
+                </button>
+            </div>
+            <h1>Modificación de datos</h1>
+            <form id="FormularioModif"></form>
+            <div class="form-group">
+                <input type="text" id="id_mensaje" class="form-control" name="id_mensaje" readonly />
+            </div>
+            <div class="form-group">
+                <label for="nombre_usuario_mod">Nombre Usuario:</label>
+                <input type="text" id="nombre_usuario_mod" class="form-control" name="nombre_usuario_mod" required />
+            </div>
+            <div class="form-group">
+                <label for="mensaje_mod">Mensaje:</label>
+                <input type="text" id="mensaje_mod" class="form-control" name="mensaje_mod" required />
+            </div>
+            <div class="form-group">
+                <label for="visible_mod">Visible:</label>
+                <input type="text" id="visible_mod" class="form-control" name="visible_mod" required />
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="editar(document.getElementById('id_pintor').value)">
+                Modificar
+            </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 d-block" id="formulario">
+
+            <h2>Agregar Mensaje</h2>
+            <form id="miFormulario">
+                <div class="form-group">
+                    <label for="nombre_cuadro">Nombre Usuario:</label>
+                    <input type="text" id="nombre_usuario" class="form-control" name="nombre_usuario" required />
+                </div>
+                <div class="form-group">
+                    <label for="nombre_pintor">Mensaje:</label>
+                    <input type="text" id="mensaje" class="form-control" name="mensaje" required />
+                </div>
+                <button type="button" class="btn btn-primary" onclick="subir()">
+                    Nuevo Cuadro!
+                </button>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="avisos"></div>
+        </div>
+    </div>
+</div>
+<br />
+<script src="../public/js/adminmensajes.js" defer></script>
+
+{% endblock %}

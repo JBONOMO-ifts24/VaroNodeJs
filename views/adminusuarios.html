@@ -1,0 +1,91 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Admin Usuarios{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1> Usuarios</h1>
+    <br />
+    <div class="row">
+        <div class="col-md-6" id="listado">
+            <h1>Listado de Usuarios</h1>
+            <div id="datosGuardados" class="row"></div>
+        </div>
+        <div class="col-md-6 d-none" id="formu_modifica">
+            <div class="d-flex">
+                <button type="button" onclick="ocultarFormu()" class="btn btn-primary btn-sm ml-auto">
+                    X
+                </button>
+            </div>
+            <h1>Modificación de datos</h1>
+            <form id="FormularioModif"></form>
+            <div class="form-group">
+                <input type="text" id="id_usuario_mod" class="form-control" name="id_usuario_mod" readonly />
+            </div>
+            <div class="form-group">
+                <label for="mail_mod">Cambiar mail:</label>
+                <input type="text" id="mail_mod" class="form-control" name="mail_mod" required />
+            </div>
+            <div class="form-group">
+                <label for="contraseña_mod">Cambiar contraseña:</label>
+                <input type="text" id="contraseña_mod" class="form-control" name="contraseña_mod" required />
+            </div>
+
+            <div class="form-group">
+                <label for="imagen_mod">Archivo imagen usuario: </label>
+                <input type="file" id="imagen_mod" class="form-control-file" name="imagen_mod" required />
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="editar(document.getElementById('id_usuario_mod').value)">
+                Modificar
+            </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 d-block" id="formulario">
+
+            <h2>Agregar Usuario</h2>
+            <form id="miFormulario">
+                <div class="form-group">
+                    <label for="nombre_usuario">Nombre Usuario:</label>
+                    <input type="text" id="nombre_usuario" class="form-control" name="nombre_usuario" required />
+                </div>
+                <div class="form-group">
+                    <label for="mail_usuario">Mail Usuario:</label>
+                    <input type="text" id="mail_usuario" class="form-control" name="mail_usuario" required />
+                </div>
+                <div class="form-group">
+                    <label for="contraseña">Contraseña:</label>
+                    <input type="text" id="contraseña" class="form-control" name="contraseña" required />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="imagen">Archivo imagen usuario: </label>
+                    <input type="file" id="imagen" class="form-control-file" name="imagen" required />
+                </div>
+                <button type="button" class="btn btn-primary" onclick="subir()">
+                    Nuevo Usuario!
+                </button>
+            </form>
+        </div>
+        
+
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="roles_usuario">
+            <h2>Roles Usuario</h2>
+            <p>Para ver y asignar nuevos roles a un usuario, hacer click <a href="./roles">aquí</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="avisos"></div>
+    </div>
+</div>
+<br />
+<script src="../public/js/adminusuarios.js" defer></script>
+
+{% endblock %}

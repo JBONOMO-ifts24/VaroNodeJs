@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %} Varo Node.js {% endblock %}</title>
+    <title>{% block title %} ADMIN {% endblock %}</title>
     <!-- CDN de Bootstrap-->
     <link
       rel="stylesheet"
@@ -23,8 +23,7 @@
     <!-- stylesheet que escribo yo -->
     <link rel="stylesheet" href="../public/style.css" />
 
-    <!-- Mi archivo JavaScript-->
-    <!-- <script src="/script.js" defer></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark navbar-mod">
@@ -51,42 +50,35 @@
 
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/paises">Paises</a>
+            </li>
           <li class="nav-item">
-            <a class="nav-link" href="/bio">Biografía</a>
+            <a class="nav-link" href="/admin/ciudades">Ciudades</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/obra">Obra</a>
+            <a class="nav-link" href="/admin/pintores">Pintores</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/muro">Mensajes</a>
+            <a class="nav-link" href="/admin/cuadros">Cuadros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/links">Información Adicional</a>
+            <a class="nav-link" href="/admin/usuarios">Usuarios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/api">API</a>
+            <a class="nav-link" href="/admin/mensajes">Mensajes</a>
           </li>
-          {% if admin %} 
-          <li class="nav-item">
-            <a class="nav-link" href="/admin">ADMIN</a>
-          </li>
-          {% endif %}
         </ul>
       </div>
       <div id="logueo" style="float: right">
-        {% if loggedIn %} 
+          
           <p><strong>{{ user }}</strong> <img
-            src= " ./uploads/{{ imagen }}"
+            src= " ../uploads/{{ imagen }}"
             alt="Foto"
             style="width: 60px"
-          /><a href="/auth/logout">Logout</a></p> 
+          /> <a href="/auth/logout">Logout</a> </p>
           
-           {% else %} 
-          <a class="btn btn-secondary" href="/auth/login">Log in</a>
-          <br>
-          <a href="/register">Registrate</a>
-           
-          {% endif %}
+          
       </div>
     </nav>
     <main> {% block content %}{% endblock %} </main>
