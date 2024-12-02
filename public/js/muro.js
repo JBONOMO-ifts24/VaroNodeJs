@@ -53,8 +53,8 @@ function subirMensaje() {
 
 function mostrarDatos() {
   console.log("Mostrar datos!");
-  const loggedIn =
-    document.querySelector(".container-fluid").dataset.loggedIn === "true";
+  const loggedIn = document.querySelector(".container-fluid").dataset.loggedIn === "true";
+
   console.log(loggedIn);
   fetch("/APImensajes")
     .then((response) => response.json())
@@ -65,29 +65,38 @@ function mostrarDatos() {
       if (data && Array.isArray(data)) {
         data.forEach((mensaje) => {
           //hacer que chequee si el campo "visible" es 0 no se muestre el mensaje (seria el borrar)
+          let fecha = new Date(mensaje.fecha_mensaje).toLocaleDateString('es-AR');
           if (loggedIn) {
+            const usuario = document.getElementById("nombre_usuario").value;
+            let editar;
+            if(usuario == mensaje.nombre_usuario){editar = "<button class='btn btn-primary' onclick= modificarDatos(" + mensaje.idmensajes +">✏️</button>" }else{
+              editar = "";
+            }
             if (mensaje.visible == 1) {
               const p = document.createElement("div");
               p.innerHTML =
                 "<p>El día " +
-                mensaje.fecha_mensaje +
+                fecha +
                 "<strong> " +
                 mensaje.nombre_usuario +
                 "</strong> escribió: <strong>" +
-                mensaje.mensaje +
-                "</strong> <button class='btn btn-primary' onclick= editar(" +
-                mensaje.idmensajes +
-                ")>✏️</button> <button class='btn btn-primary' onclick= borrar(" +
+                mensaje.mensaje+"</strong>"+editar+"<button class='btn btn-primary' onclick= borrar(" +
                 mensaje.idmensajes +
                 ")>❌</button></p>";
               mensajesContainer.appendChild(p);
+            }else{
+              const p = document.createElement("div");
+              p.innerHTML =
+                "<p>❌Mensaje eliminado❌</p>";
+              mensajesContainer.appendChild(p);
             }
+
           } else {
             if (mensaje.visible == 1) {
               const p = document.createElement("div");
               p.innerHTML =
                 "<p>El día " +
-                mensaje.fecha_mensaje +
+                fecha +
                 "<strong> " +
                 mensaje.nombre_usuario +
                 "</strong> escribió: <strong>" + mensaje.mensaje + " ";
@@ -102,32 +111,39 @@ function mostrarDatos() {
     .catch((error) => console.error("Error:", error));
 }
 
-function borrar(id) {
+async function borrar(id) {
+  //Este borrar en realidad cambia el valor de visible a 0
+
+  //tomar datos de lo que se quiere modificar
   const avi = document.getElementById("avisos");
   console.log(`Se procede a borrar el mensaje con ID ${id}`);
   //Se cambia el estado a visible = 0
   let datos_mensaje;
-  fetch(`/APImensajes/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      datos_mensaje = data.mensaje;
-      console.log(data.mensaje);
-      console.log(data);
-      datos_mensaje = data;
-      console.log(datos_mensaje);
-      try {
-        modificarDatos(
-          datos_mensaje.idmensajes,
-          datos_mensaje.mensaje,
-          datos_mensaje.nombre_usuario,
-          0
-        );
-        avi.innerHTML =
-          '<div class="alert alert-primary" role="alert">💀Mensaje eliminado💀</div>';
-        setTimeout(() => {
-          avi.innerHTML = "";
-        }, 4000);
-      } catch (error) {
+  try{
+    const consulta = await fetch(`/APImensajes/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },body: JSON.stringify({
+        nombre_usuario: nombre,
+        mensaje: men,
+        visible: 0
+    }),
+  });
+    res = await consulta.json();
+    console.log(res);
+    const p = document.createElement("div");
+    let mensaje_e =
+      '<div class="alert alert-primary" role="alert">Mensaje eliminado</div>';
+      
+
+    p.innerHTML = mensaje_e;
+    avi.appendChild(p);
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+    mostrarDatos();
+    }catch (error) {
         avi.innerHTML =
           '<div class="alert alert-danger" role="alert">  Error en el proceso</div>';
         setTimeout(() => {
@@ -135,19 +151,20 @@ function borrar(id) {
         }, 4000);
       }
       mostrarDatos();
-    });
+    ;
 }
 
-function modificarDatos(id, mens, nombre, vis) {
+function modificarDatos(id) {
+  //El usuario tiene que ser el mismo que el que escribió el mensaje.
   fetch(`/APImensajes/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      visible: vis,
+      
       mensaje: mens,
-      nombre_usuario: nombre,
+    
     }),
   })
     .then((response) => response.json())

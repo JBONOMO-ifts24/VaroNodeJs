@@ -2,6 +2,7 @@ function ingresar() {
   const nombre_usuario = document.getElementById("user");
   const email = document.getElementById("email");
   const password = document.getElementById("password");
+  const archivo = document.getElementById("imagen");
   const avi = document.getElementById("avisos");
 
   //validación de datos
@@ -22,16 +23,19 @@ function ingresar() {
   } else {
 
   // Nos comunicamos con nuestro backend usando fetch
+
+  const formData = new FormData();
+  formData.append("username", nombre_usuario.value);
+  formData.append("email", email.value);
+  formData.append("imagen", archivo.files[0]);
+  formData.append("password",password.value);
   const res = fetch("http://localhost:3000/auth/register", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      
     },
-    body: JSON.stringify({
-      username: nombre_usuario.value,
-      email: email.value,
-      password: password.value,
-    }),
+    body: formData,
+    
   })
     .then((response) => response.json())
     .then((data) => {

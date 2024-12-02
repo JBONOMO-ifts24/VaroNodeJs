@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     console.log("token " + token);
     //Validación de los datos en los campos nombre y mensaje
     try {
-      const consulta = await fetch(`/APIpintores/${id}`, {
+      const consulta = await fetch(`/APImensajes/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       console.log(res);
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-primary" role="alert">💀Pintor eliminado💀</div>';
+        '<div class="alert alert-primary" role="alert">💀Mensaje eliminado💀</div>';
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
