@@ -72,7 +72,7 @@ async function subir() {
     console.log(res);
     const p = document.createElement("div");
     let mensaje_e =
-      '<div class="alert alert-danger" role="alert"> 🗺️País agregado🗺️ </div>';
+      '<div class="alert alert-danger" role="alert"> 🗺️Ciudad agregada🗺️ </div>';
 
     p.innerHTML = mensaje_e;
     avi.appendChild(p);
