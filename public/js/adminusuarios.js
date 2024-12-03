@@ -49,54 +49,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
   
   async function subir() {
-    let res;
-    const nombre_pintor = document.getElementById("nombre_pintor");
-    const fecha_nac = document.getElementById("fecha_nac");
-    const fecha_mue = document.getElementById("fecha_mue");
-    const lugar_nac = document.getElementById("lugar_nac");
-    const biograf_pintor = document.getElementById("biograf_pintor");
-    const avi = document.getElementById("avisos");
-    const token = await checkAuth();
-    console.log("token " + token);
-  
-    //Validación de los datos en los campos nombre y mensaje
-    try {
-      const consulta = await fetch("/APIpintores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          nombre_pintor: nombre_pintor.value,
-          fecha_nac: fecha_nac.value,
-          fecha_mue: fecha_mue.value,
-          ciudad: lugar_nac.value,
-          biograf_pintor: biograf_pintor.value
-        }),
-      });
-      res = await consulta.json();
-      console.log(res);
+    
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-danger" role="alert"> 🎨Pintor agregado🎨 </div>';
-  
-      p.innerHTML = mensaje_e;
-      avi.appendChild(p);
-      nombre_pintor.value = "";
-      fecha_nac.value = "";
-      fecha_mue.value = "";
-      lugar_nac.value = "";
-      biograf_pintor.value ="";
-      setTimeout(() => {
-        avi.innerHTML = "";
-      }, 4000);
-      mostrarDatos();
-    } catch (error) {
-      console.log("Error en la obtención de datos .");
-      const p = document.createElement("div");
-      let mensaje_e =
-        '<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
+        '<div class="alert alert-danger" role="alert">Todavía no disponible, realizar desde API 😰</div>';
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
@@ -109,7 +65,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);
-    }
+    
   }
   
   async function borrar(id) {
@@ -153,65 +109,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
   async function editar(id) {
-    const nombre_pintor = document.getElementById("nombre_pintor_mod");
-    const fecha_nac = document.getElementById("fecha_nac_mod");
-    const fecha_mue = document.getElementById("fecha_mue_mod");
-    const lugar_nac = document.getElementById("lugar_nac_mod");
-    const biograf_pintor = document.getElementById("biograf_pintor_mod");
-
-    const avi = document.getElementById("avisos");
-    const token = await checkAuth();
-    console.log("token " + token);
-    //Validación de los datos en los campos nombre y mensaje
-    try {
-      const consulta = await fetch(`/APIpintores/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            nombre_pintor: nombre_pintor.value,
-            fecha_nac: fecha_nac.value,
-            fecha_mue: fecha_mue.value,
-            ciudad: lugar_nac.value,
-            biograf_pintor: biograf_pintor.value
-        }),
-      });
-      res = await consulta.json();
-      console.log(res);
+    
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-primary" role="alert">📝Pintor modificado📝</div>';
+        '<div class="alert alert-danger" role="alert">Todavia no funciona, realizar desde la API 😰</div>';
         nombre_pintor.value = "";
-        fecha_nac.value = "";
-        fecha_mue.value = "";
-        lugar_nac.value = "";
-        biograf_pintor.value ="";
+        
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);
-      mostrarDatos();
-    } catch (error) {
-      console.log("Error en la obtención de datos .");
-      const p = document.createElement("div");
-      let mensaje_e =
-        '<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
-        nombre_pintor.value = "";
-        fecha_nac.value = "";
-        fecha_mue.value = "";
-        lugar_nac.value = "";
-        biograf_pintor.value ="";
-  
-      p.innerHTML = mensaje_e;
-      avi.appendChild(p);
-      setTimeout(() => {
-        avi.innerHTML = "";
-      }, 4000);
-    }
+    
   }
   
   async function modifDato(id) {

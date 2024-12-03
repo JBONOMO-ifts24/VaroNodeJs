@@ -6,6 +6,7 @@ Para login: Json Web Token-
 
 # Para hacer
 
+
 # Endpoints
 ## Autenticación
 - POST /auth/register = Registrar usuario. (datos requeridos: username, email, password)
