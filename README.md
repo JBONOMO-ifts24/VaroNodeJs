@@ -5,13 +5,12 @@ Uso de Mulster para subir archivos
 Para login: Json Web Token-
 
 # Para hacer
-- Ver como se modifican los cuadros (controller)
-- Cambiar mensajes: En la página de admin hay que estar logueado con permisos de admin para borrar un mensaje.
+
 
 # Endpoints
 ## Autenticación
 - POST /auth/register = Registrar usuario. (datos requeridos: username, email, password)
-- POST /auth/login = Login de usuario. (datos requeridos: username, password)
+- POST /auth/loginAPI = Login de usuario. (datos requeridos: username, password)
 - GET /auth/protected = Prueba de uso (Se tiene que estar logueado)
 - GET /auth/usuarios = Obtener todos los usuarios (Se tiene que estar logueado)
 - GET /auth/usuarios/id = Obtener usuario por id (Se tiene que estar logueado)
@@ -19,38 +18,38 @@ Para login: Json Web Token-
 - DELETE /auth/login/id = Borrar usuario (Se tiene que estar logueado con un usuario con permisos de administrador)
 
 ## Mensajes
-- GET /mensajes = Obtener todos los mensajes.
-- GET /mensajes/id = Obtener un mensaje en específico.
-- POST /mensajes = Crear un nuevo mensaje. (datos requeridos: nombre_usuario, mensaje)
-- PUT /mensajes = Modificar un mensaje. (datos requeridos: nombre_usuario, mensaje)
-- DELETE /mensajes/id = Borrar un mensaje
+- GET /APImensajes = Obtener todos los mensajes.
+- GET /APImensajes/id = Obtener un mensaje en específico.
+- POST /APImensajes = Crear un nuevo mensaje. (datos requeridos: nombre_usuario, mensaje)
+- PUT /APImensajes = Modificar un mensaje. (datos requeridos: nombre_usuario, mensaje)
+- DELETE /APImensajes/id = Borrar un mensaje
 
 ## Cuadros
-- GET /cuadros = Obtener todos los cuadros.
-- GET /cuadros/id = Obtener un cuadro en específico
-- POST /cuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro , pintor , ano_realizado, *archivo de imagen*, ubicacion_orig)
-- PUT /cuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro, pintor, ano_realizado,ubicacion_orig)
-- DELETE /cuadros/id = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador para borrar un cuadro).
+- GET /APIcuadros = Obtener todos los cuadros.
+- GET /APIcuadros/id = Obtener un cuadro en específico
+- POST /APIcuadros = Crear un nuevo cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro , pintor , ano_realizado, *archivo de imagen*, ubicacion_orig)
+- PUT /APIcuadros = Modificar un cuadro. (Se tiene que estar logueado para postear un cuadro). (datos requeridos: nombre_cuadro, pintor, ano_realizado,ubicacion_orig)
+- DELETE /APIcuadros/id = Borrar un cuadro. (Se tiene que estar logueado con un usuario con permisos de administrador para borrar un cuadro).
 
 ## Países
-- GET /paises = Obtener todos los países. (Se tiene que estar logueado)
-- GET /paises/:idpais = Obtener un país por ID. (Se tiene que estar logueado)
-- PUT /paises/:idpais = Actualizar un país (sólo para administradores). (datos requeridos: "nombre")
-- POST /paises/:idpais = Crear un nuevo país (sólo para administradores). (datos requeridos: "nombre")
-- DELETE /paises/:idpais = Eliminar un país (sólo para administradores).
+- GET /APIpaises = Obtener todos los países. (Se tiene que estar logueado)
+- GET /APIpaises/:idpais = Obtener un país por ID. (Se tiene que estar logueado)
+- PUT /APIpaises/:idpais = Actualizar un país (sólo para administradores). (datos requeridos: "nombre")
+- POST /APIpaises/:idpais = Crear un nuevo país (sólo para administradores). (datos requeridos: "nombre")
+- DELETE /APIpaises/:idpais = Eliminar un país (sólo para administradores).
 
 ## Ciudades
-- GET /ciudades = Obtener todas las ciudades. (Se tiene que estar logueado)
-- GET /ciudades/id = Obtener una ciudad. (Se tiene que estar logueado)
-- POST /ciudades - Crear una nueva ciudad.(sólo para administradores) (datos requeridos: "ciudad", "pais").
-- PUT /paises/id = Actualizar una ciudad (sólo para administradores) (datos requeridos: "nombre", "pais").
+- GET /APIciudades = Obtener todas las ciudades. (Se tiene que estar logueado)
+- GET /APIciudades/id = Obtener una ciudad. (Se tiene que estar logueado)
+- POST /APIciudades - Crear una nueva ciudad.(sólo para administradores) (datos requeridos: "ciudad", "pais").
+- PUT /APIpaises/id = Actualizar una ciudad (sólo para administradores) (datos requeridos: "nombre", "pais").
 
 ## Pintores
-- GET /pintores = Obtener todos los pintores.
-- GET /pintores/id = Obtener un pintor.
-- POST /pintores - Crear un nuevo pintor (sólo para administradores) (datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad).
-- PUT /pintores = Actualizar una ciudad (sólo para administradores).(datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad)
-- DELETE /pintores/id  Eliminar un pintor (sólo para administradores).
+- GET /APIpintores = Obtener todos los pintores.
+- GET /APIpintores/id = Obtener un pintor.
+- POST /APIpintores - Crear un nuevo pintor (sólo para administradores) (datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad).
+- PUT /APIpintores = Actualizar una ciudad (sólo para administradores).(datos requeridos: nombre_pintor, fecha_nac,fecha_mue,biograf_pintor, ciudad)
+- DELETE /APIpintores/id  Eliminar un pintor (sólo para administradores).
 
 
 # Enunciado del proyecto:
