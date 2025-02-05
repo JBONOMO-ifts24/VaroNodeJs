@@ -43,9 +43,7 @@ const upload = multer({
 router.post('/register',upload.single('imagen'), controller.register);
 router.post('/loginAPI', controller.loginAPI);
 router.post('/login', controller.login);
-router.get('/login', (req, res) => {
-    res.render('login.html');
-});
+
 
 router.get("/protected", authMiddleware.authenticateToken, (req, res) => {
     res.status(200).send(`Bienvenido usuario registrado!`);
