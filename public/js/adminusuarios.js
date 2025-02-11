@@ -50,21 +50,67 @@ document.addEventListener("DOMContentLoaded", (event) => {
   
   async function subir() {
     
+    let res;
+    const nombre_usuario = document.getElementById("nombre_usuario");
+    const mail_usuario = document.getElementById("mail_usuario");
+    const password = document.getElementById("password");
+    const archivo = document.getElementById("imagen");
+    
+  
+    const avi = document.getElementById("avisos");
+    const token = await checkAuth();
+    console.log(archivo.files[0]);
+  
+    // Crear un objeto FormData y agregar los campos y el archivo
+    const formData = new FormData();
+    formData.append("username", nombre_usuario.value);
+    formData.append("email", mail_usuario.value);
+    formData.append("password", password.value);
+    formData.append("imagen", archivo.files[0]);
+    
+  
+    //Validación de los datos en los campos nombre y mensaje
+    try {
+      const consulta = await fetch("/auth/register", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }); 
+      res = await consulta.json();
+      console.log(res);
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-danger" role="alert">Todavía no disponible, realizar desde API 😰</div>';
+        '<div class="alert alert-danger" role="alert"> Usuario Agregado!!! </div>';
   
       p.innerHTML = mensaje_e;
       avi.appendChild(p);
-      nombre_pintor.value = "";
-      fecha_nac.value = "";
-      fecha_mue.value = "";
-      lugar_nac.value = "";
-      biograf_pintor.value ="";
+      nombre_usuario.value = "";
+      mail_usuario.value = "";
+      password.value = "";
+      archivo.value = "";
+      setTimeout(() => {
+        avi.innerHTML = "";
+      }, 4000);
+      mostrarDatos();
+    } catch (error) {
+      console.log("Error en la obtención de datos .");
+      const p = document.createElement("div");
+      let mensaje_e =
+        '<div class="alert alert-danger" role="alert">Error en el proceso. 😰</div>';
+  
+      p.innerHTML = mensaje_e;
+      avi.appendChild(p);
+      nombre_usuario.value = "";
+      mail_usuario.value = "";
+      password.value = "";
+      archivo.value = "";
   
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);
+    }
     
   }
   
@@ -108,16 +154,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }, 4000);
     }
   }
-  async function editar(id) {
-    
+  function editar(id) {
+    const avi = document.getElementById("avisos");
+      console.log("editar!!!")
       const p = document.createElement("div");
       let mensaje_e =
-        '<div class="alert alert-danger" role="alert">Todavia no funciona, realizar desde la API 😰</div>';
-        nombre_pintor.value = "";
+        '<div class="alert alert-danger" role="alert">Todavía no funciona, realizar desde la API 😰</div>';
+        
         
   
       p.innerHTML = mensaje_e;
-      avi.appendChild(p);
+      avi.appendChild(p); 
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);

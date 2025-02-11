@@ -226,6 +226,10 @@ router.get("/register", (req, res) => {
   res.render("register.html");
 });
 
+router.get("/login", (req, res) => {
+  res.render("login.html");
+});
+
 router.get("/links", (req, res) => {
   const token = req.cookies.token;
   if (!token) {

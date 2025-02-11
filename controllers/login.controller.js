@@ -126,6 +126,8 @@ const allUsuarios = (req, res) => {
     }); 
 };
 
+
+
 // Para un usuario
 const showUsuario = (req, res) => {
     const {idusuario} = req.params;
@@ -182,6 +184,7 @@ const destroyUsuario = (req, res) => {
         res.json({mesaje : "Usuario Eliminado"});
     }); 
 };
+
 
 
 module.exports = {

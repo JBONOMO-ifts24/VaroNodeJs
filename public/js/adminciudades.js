@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   checkAuth();
   mostrarDatos();
+  setDatosPaises();
 });
 
 async function mostrarDatos() {
@@ -49,7 +50,7 @@ async function checkAuth() {
 
 async function subir() {
   let res;
-  const pais = document.getElementById("n_pais");
+  const pais = document.getElementById("d_pais");
   const ciudad = document.getElementById("nombre_ciudad");
   const avi = document.getElementById("avisos");
   const token = await checkAuth();
@@ -221,4 +222,48 @@ function ocultarFormu() {
     formuNuevo.classList.remove("d-none");
     formuNuevo.classList.add("d-block");
   }
+}
+
+async function setDatosPaises() {
+  //Con esta funcion tomamos datos del endpoint paises y puebla los datos del desplegable.
+  const desplegable = document.getElementById("d_pais");
+  const desplegable_mod = document.getElementById("pais");
+  // Obtener datos de la API
+  const res = await getDatosPais();
+  console.log(res);
+
+  
+  // Crear y agregar las opciones al select
+  res.forEach(opcion => {
+    const option = document.createElement('option');
+    option.value = opcion.nombre;
+    option.text = opcion.nombre;
+    desplegable_mod.appendChild(option);
+  });
+  res.forEach(opcion => {
+    const option = document.createElement('option');
+    option.value = opcion.nombre;
+    option.text = opcion.nombre;
+    desplegable.appendChild(option);
+  });
+}
+
+async function getDatosPais() {
+  let res;
+  try {
+    console.log("Mostrar datos!");
+    const token = await checkAuth();
+    console.log("token " + token);
+    const consulta = await fetch("/APIpaises", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    res = await consulta.json();
+    return res;
+  } catch (error) {
+    console.log("Error en la obtención de los datos");
+  }
+  
 }
