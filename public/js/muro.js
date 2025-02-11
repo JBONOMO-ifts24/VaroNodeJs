@@ -55,8 +55,11 @@ function mostrarDatos() {
   console.log("Mostrar datos!");
   const loggedIn =
     document.querySelector(".container-fluid").dataset.loggedIn === "true";
+  const usuario = document.getElementById("nombre_usuario").value;
 
   console.log(loggedIn);
+  console.log(usuario);
+
   fetch("/APImensajes")
     .then((response) => response.json())
     .then((data) => {
@@ -70,13 +73,14 @@ function mostrarDatos() {
             "es-AR"
           );
           if (loggedIn) {
-            const usuario = document.getElementById("nombre_usuario").value;
             let editar;
             if (usuario == mensaje.nombre_usuario) {
               editar =
                 "<button class='btn btn-primary' onclick= modificarDatos(" +
                 mensaje.idmensajes +
-                ")>✏️</button>";
+                ")>✏️</button> <button class='btn btn-primary' onclick= borrar(" +
+                mensaje.idmensajes +
+                ")>❌</button></p>";
             } else {
               editar = "";
             }
@@ -90,10 +94,8 @@ function mostrarDatos() {
                 "</strong> escribió: <strong>" +
                 mensaje.mensaje +
                 "</strong>" +
-                editar +
-                "<button class='btn btn-primary' onclick= borrar(" +
-                mensaje.idmensajes +
-                ")>❌</button></p>";
+                editar;
+
               mensajesContainer.appendChild(p);
             } else {
               const p = document.createElement("div");
@@ -122,40 +124,44 @@ function mostrarDatos() {
     .catch((error) => console.error("Error:", error));
 }
 
-function borrar(id) {
+async function borrar(id) {
   const avi = document.getElementById("avisos");
   console.log(`Se procede a borrar el mensaje con ID ${id}`);
   //Se cambia el estado a visible = 0
   let datos_mensaje;
-  fetch(`/APImensajes/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      datos_mensaje = data.mensaje;
-      console.log(data.mensaje);
-      console.log(data);
-      datos_mensaje = data;
-      console.log(datos_mensaje);
-      try {
-        modificarDatos(
-          datos_mensaje.idmensajes,
-          datos_mensaje.mensaje,
-          datos_mensaje.nombre_usuario,
-          0
-        );
-        avi.innerHTML =
-          '<div class="alert alert-primary" role="alert">💀Mensaje eliminado💀</div>';
-        setTimeout(() => {
-          avi.innerHTML = "";
-        }, 4000);
-      } catch (error) {
-        avi.innerHTML =
-          '<div class="alert alert-danger" role="alert">  Error en el proceso</div>';
-        setTimeout(() => {
-          avi.innerHTML = "";
-        }, 4000);
-      }
-      mostrarDatos();
+  const consulta = await fetch(`/APImensajes/${id}`);
+  await consulta
+    .json()
+    .then((data) => (datos_mensaje = data))
+    .then(() => console.log(datos_mensaje));
+  try {
+    const con = await fetch(`/APImensajes/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre_usuario: datos_mensaje.nombre_usuario,
+        mensaje: datos_mensaje.mensaje,
+        visible: 0,
+      }),
     });
+    console.log("mensaje borrado");
+    avi.innerHTML =
+        '<div class="alert alert-primary" role="alert">Mensaje Borrado!</div>';
+    mostrarDatos();
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+  }
+  catch (error) {
+    console.log("Error en la obtención de los datos");
+    avi.innerHTML =
+      '<div class="alert alert-primary" role="alert">Error!</div>';
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+  }
 }
 
 async function modificarDatos(id) {
@@ -179,7 +185,7 @@ async function modificarDatos(id) {
         body: JSON.stringify({
           nombre_usuario: res.nombre_usuario,
           mensaje: mensaje,
-          visible: 1
+          visible: 1,
         }),
       });
 
@@ -190,7 +196,7 @@ async function modificarDatos(id) {
       setTimeout(() => {
         avi.innerHTML = "";
       }, 4000);
-    }else{
+    } else {
       avi.innerHTML =
         '<div class="alert alert-primary" role="alert">No se puede modificar mensaje, sólo el usuario que lo hizo lo puede modificar</div>';
       setTimeout(() => {

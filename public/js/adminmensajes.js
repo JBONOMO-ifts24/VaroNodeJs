@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const divDatos = document.getElementById("datosGuardados");
     divDatos.innerHTML = "";
     let res;
-    try {
+    try { 
       console.log("Mostrar datos!");
       const consulta = await fetch("/APImensajes", {
         method: "GET",
@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
   async function editar(id) {
+    //poblar los campos del formulario con los datos del registro.
     const nombre_usuario = document.getElementById("nombre_usuario_mod");
     const mensaje = document.getElementById("mensaje_mod");
     const visible = document.getElementById("visible_mod");
@@ -140,6 +141,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const avi = document.getElementById("avisos");
     const token = await checkAuth();
     console.log("token " + token);
+    //tomar los datos del mensaje a modificar
+    
     //Validación de los datos en los campos nombre y mensaje
     try {
       const consulta = await fetch(`/APImensajes/${id}`, {
@@ -187,10 +190,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   }
   
-  function modifDato(id) {
+  async function modifDato(id) {
     const formuModifica = document.getElementById("formu_modifica");
     const formuNuevo = document.getElementById("formulario");
     const idciu = document.getElementById("id_mensaje");
+    const nombre_usuario = document.getElementById("nombre_usuario_mod");
+    const mensaje = document.getElementById("mensaje_mod");
+    const visible = document.getElementById("visible_mod");
+    const token = await checkAuth(); 
+  
   
     if (formuModifica.classList.contains("d-none")) {
       formuModifica.classList.remove("d-none");
@@ -203,6 +211,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   
     idciu.value = id;
+    try {
+      const consulta = await fetch(`/APImensajes/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      res = await consulta.json();
+      console.log(res);
+      nombre_usuario.value = res.nombre_usuario;
+      mensaje.value = res.mensaje;
+      visible.value = res.visible;
+    } catch (error) {
+      console.log("Error en la obtención de datos .");
+    }
   }
   
   function ocultarFormu() {
