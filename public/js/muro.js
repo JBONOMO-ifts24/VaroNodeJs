@@ -55,10 +55,10 @@ function mostrarDatos() {
   console.log("Mostrar datos!");
   const loggedIn =
     document.querySelector(".container-fluid").dataset.loggedIn === "true";
-  const usuario = document.getElementById("nombre_usuario").value;
+  const usuario = document.getElementById("nombre_usuario");
 
   console.log(loggedIn);
-  console.log(usuario);
+  
 
   fetch("/APImensajes")
     .then((response) => response.json())
@@ -74,7 +74,7 @@ function mostrarDatos() {
           );
           if (loggedIn) {
             let editar;
-            if (usuario == mensaje.nombre_usuario) {
+            if (usuario.value == mensaje.nombre_usuario) {
               editar =
                 "<button class='btn btn-primary' onclick= modificarDatos(" +
                 mensaje.idmensajes +
